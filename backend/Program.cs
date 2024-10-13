@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add neccesary variables to the configuration
+// Add necessary variables to the configuration
 
 // Adding JWT Key and checking if it is missing
 string? jwtKey = builder.Configuration["Jwt:Key"];
-if(string.IsNullOrEmpty(jwtKey))
+if (string.IsNullOrEmpty(jwtKey))
 {
     throw new InvalidOperationException("JWT Key is missing from configuration");
 }
@@ -58,9 +58,10 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Add controllers to the services container
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Add Swagger/OpenAPI support
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -79,12 +80,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Seed the database with initial data
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     SeedData.SeedProductsAndCategories(services);
     SeedData.SeedUsers(services).Wait();
-//    SeedData.ClearDatabaseAsync(services).Wait();
+    // SeedData.ClearDatabaseAsync(services).Wait(); // Uncomment to clear the database
 }
 
 app.Run();

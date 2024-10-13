@@ -29,6 +29,26 @@ This project is a simple webshop application with a frontend built using JavaScr
     ```
     This command will attempt to create the `webshop.db` file in the [`./backend/Database`] folder. If the folder does not exist, you might need to create it manually.
 
+## Running the Program
+
+To run the program, you can open two terminals:
+
+1. In the first terminal, navigate to the [`backend`] directory and run:
+    ```sh
+    cd backend
+    dotnet run
+    ```
+    or
+    ```sh
+    dotnet watch run
+    ```
+
+2. In the second terminal, navigate to the [`frontend`] directory and run:
+    ```sh
+    cd frontend
+    npm start
+    ```
+
 ## Database Description
 
 The database consists of the following entities and their relationships:

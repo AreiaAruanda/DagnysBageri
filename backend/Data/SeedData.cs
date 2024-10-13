@@ -6,17 +6,19 @@ namespace backend.Data
 {
     public static class SeedData
     {
+        // Method to seed initial products and categories into the database
         public static void SeedProductsAndCategories(IServiceProvider serviceProvider)
         {
             using (var context = new WebshopDbContext(
                 serviceProvider.GetRequiredService<DbContextOptions<WebshopDbContext>>()))
             {
-                // Look for any products.
+                // Check if the database has already been seeded
                 if (context.Products.Any() || context.Categories.Any())
                 {
                     return;   // DB has been seeded
                 }
 
+                // Create a list of categories
                 var categories = new List<CategoryModel>
                 {
                     new CategoryModel { Name ="Bakery", Products = new List<ProductModel>() },
@@ -25,9 +27,11 @@ namespace backend.Data
                     new CategoryModel { Name ="Desserts", Products = new List<ProductModel>() }
                 };
 
+                // Add categories to the context
                 context.Categories.AddRange(categories);
                 context.SaveChanges();
 
+                // Create product instances
                 var sourdoughBread = new ProductModel
                 {
                     Name = "Sourdough Bread",
@@ -78,6 +82,7 @@ namespace backend.Data
                     Categories = new List<CategoryModel> { categories[0], categories[3] }
                 };
 
+                // Add products to the context
                 context.Products.AddRange(sourdoughBread, chocolateCroissant, bagel, veganBrownie, glutenFreeMuffin);
                 context.SaveChanges();
 
@@ -87,19 +92,23 @@ namespace backend.Data
                 categories[2].Products.Add(chocolateCroissant);
                 categories[3].Products.AddRange(new[] { veganBrownie, glutenFreeMuffin });
 
+                // Save changes to the context
                 context.SaveChanges();
             }
         }
 
+        // Method to seed initial users into the database
         public static async Task SeedUsers(IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
+            // Check if the database has already been seeded with users
             if (await userManager.Users.AnyAsync())
             {
                 return; // DB has been seeded
             }
 
+            // Create a new user instance
             var user = new IdentityUser 
             {
                 UserName = "admin@example.com",
@@ -107,34 +116,42 @@ namespace backend.Data
                 EmailConfirmed = true
             };
 
+            // Create the user with a specified password
             var result = await userManager.CreateAsync(user, "Admin@123");
 
+            // Throw an exception if user creation failed
             if (!result.Succeeded)
             {
                 throw new InvalidOperationException("Failed to create user: " + string.Join(", ", result.Errors.Select(e => e.Description)));
             }
         }
 
+        // Method to clear the database
         public static async Task ClearDatabaseAsync(IServiceProvider serviceProvider)
         {
             using (var context = new WebshopDbContext(
                 serviceProvider.GetRequiredService<DbContextOptions<WebshopDbContext>>()))
             {
+                // Disable foreign key constraints
                 await context.Database.ExecuteSqlRawAsync("PRAGMA foreign_keys=OFF");
 
+                // Get all table names in the database
                 var tableNames = context.Model.GetEntityTypes()
                     .Select(t => t.GetTableName())
                     .Distinct()
                     .ToList();
 
+                // Delete all records from each table
                 foreach (var tableName in tableNames)
                 {
                     string deleteCommand = $"DELETE FROM [{tableName}]";
                     await context.Database.ExecuteSqlRawAsync(deleteCommand);
                 }
 
+                // Reset the auto-increment counters
                 await context.Database.ExecuteSqlRawAsync("DELETE FROM sqlite_sequence");
 
+                // Re-enable foreign key constraints
                 await context.Database.ExecuteSqlRawAsync("PRAGMA foreign_keys=ON");
             }
         }
