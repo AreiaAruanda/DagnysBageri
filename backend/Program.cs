@@ -79,4 +79,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    SeedData.SeedProductsAndCategories(services);
+    SeedData.SeedUsers(services).Wait();
+//    SeedData.ClearDatabaseAsync(services).Wait();
+}
+
 app.Run();

@@ -114,5 +114,29 @@ namespace backend.Data
                 throw new InvalidOperationException("Failed to create user: " + string.Join(", ", result.Errors.Select(e => e.Description)));
             }
         }
+
+        public static async Task ClearDatabaseAsync(IServiceProvider serviceProvider)
+        {
+            using (var context = new WebshopDbContext(
+                serviceProvider.GetRequiredService<DbContextOptions<WebshopDbContext>>()))
+            {
+                await context.Database.ExecuteSqlRawAsync("PRAGMA foreign_keys=OFF");
+
+                var tableNames = context.Model.GetEntityTypes()
+                    .Select(t => t.GetTableName())
+                    .Distinct()
+                    .ToList();
+
+                foreach (var tableName in tableNames)
+                {
+                    string deleteCommand = $"DELETE FROM [{tableName}]";
+                    await context.Database.ExecuteSqlRawAsync(deleteCommand);
+                }
+
+                await context.Database.ExecuteSqlRawAsync("DELETE FROM sqlite_sequence");
+
+                await context.Database.ExecuteSqlRawAsync("PRAGMA foreign_keys=ON");
+            }
+        }
     }
 }
