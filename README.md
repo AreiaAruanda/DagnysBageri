@@ -6,6 +6,12 @@ This project is a simple webshop application with a frontend built using JavaScr
 
 ## Setup Instructions
 
+## Database Management
+
+The `webshop.db` file, which is the SQLite database file, is included in the `.gitignore` file. This ensures that each developer has their own local copy of the database, preventing version conflicts and other issues related to database file sharing on GitHub. 
+
+To set up your local database, follow the backend setup instructions above. This will create and update your local `webshop.db` file.
+
 ### Frontend
 
 1. Navigate to the frontend directory:
