@@ -10,6 +10,7 @@ namespace backend.Data
         public WebshopDbContext(DbContextOptions<WebshopDbContext> options) : base(options){}
 
         public DbSet<ProductModel> Products { get; set; }
+        public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<OrderModel> Orders { get; set; }
         public DbSet<OrderItemModel> OrderItems { get; set; }
 
@@ -17,19 +18,24 @@ namespace backend.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<ProductModel>()
+                .HasMany(p => p.Categories)
+                .WithMany(c => c.Products)
+                .UsingEntity(j => j.ToTable("ProductCategories"));
+
             builder.Entity<OrderModel>(entity =>
             {
-                entity.HasMany(order => order.OrderItems)
-                    .WithOne(orderItem => orderItem.Order)
-                    .HasForeignKey(orderItem => orderItem.OrderId)
+                entity.HasMany(o => o.OrderItems)
+                    .WithOne(oi => oi.Order)
+                    .HasForeignKey(oi => oi.OrderId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
             builder.Entity<OrderItemModel>(entity =>
             {
-                entity.HasOne(orderItem => orderItem.Product)
+                entity.HasOne(oi => oi.Product)
                     .WithMany()
-                    .HasForeignKey(orderItem => orderItem.ProductId);
+                    .HasForeignKey(oi => oi.ProductId);
             });
         }
     }
