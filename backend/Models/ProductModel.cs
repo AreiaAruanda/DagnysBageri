@@ -27,5 +27,8 @@ namespace backend.Models
 
         // List of categories the product belongs to
         public required List<CategoryModel> Categories { get; set; }
+
+        // Image path for the product
+        public required string ImagePath { get; set; }
     }
 }
