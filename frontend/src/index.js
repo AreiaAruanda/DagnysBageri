@@ -1,10 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'; // Import React library
+import ReactDOM from 'react-dom/client'; // Import ReactDOM for rendering the app
+import './index.css'; // Import the CSS file for styling
+import App from './App'; // Import the main App component
+import reportWebVitals from './reportWebVitals'; // Import reportWebVitals for performance measurement
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS for styling
 
+// Create a root element to render the React app
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Render the App component inside the root element
 root.render(
   <React.StrictMode>
     <App />
