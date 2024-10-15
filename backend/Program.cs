@@ -2,10 +2,14 @@ using backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using backend.Interfaces;
+using backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add necessary variables to the configuration
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 // Adding JWT Key and checking if it is missing
 string? jwtKey = builder.Configuration["Jwt:Key"];
@@ -90,3 +94,6 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+
+// For testing purposes only
+public partial class Program(){}
