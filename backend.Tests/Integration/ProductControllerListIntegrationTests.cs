@@ -1,9 +1,7 @@
-using Microsoft.AspNetCore.Mvc.Testing;
 using backend.Data;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
-using backend.Models;
+using backend.ViewModels;
 using backend.Tests.Services;
 using System.Text.Json;
 
@@ -46,7 +44,7 @@ public class ProductControllerListIntegrationTests : IClassFixture<CustomWebAppl
 
         try
         {
-            var products = await response.Content.ReadFromJsonAsync<List<ProductModel>>();
+            var products = await response.Content.ReadFromJsonAsync<List<ProductViewModel>>();
             Assert.NotNull(products);
             Assert.NotEmpty(products);
             Assert.Contains(products, p => p.Name == "Sourdough Bread");

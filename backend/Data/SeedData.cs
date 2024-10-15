@@ -40,7 +40,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Flour", "Water", "Salt", "Yeast" },
                     FilterTags = new List<string> { "Bread", "Sourdough", "Vegan" },
                     Categories = new List<CategoryModel> { categories[0], categories[1] },
-                    ImagePath = "./Images/Products/sourdoughbread.webp"
+                    ImagePath = "./Data/Images/Products/sourdough-bread.webp"
                 };
 
                 var chocolateCroissant = new ProductModel
@@ -51,7 +51,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Flour", "Butter", "Chocolate", "Sugar", "Yeast" },
                     FilterTags = new List<string> { "Pastry", "Chocolate", "Breakfast" },
                     Categories = new List<CategoryModel> { categories[0], categories[2] },
-                    ImagePath = "./Images/Products/chocolate-croissant.webp"
+                    ImagePath = "./Data/Images/Products/chocolate-croissant.webp"
                 };
 
                 var bagel = new ProductModel
@@ -62,7 +62,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Flour", "Water", "Salt", "Yeast", "Sugar" },
                     FilterTags = new List<string> { "Bread", "Bagel", "Breakfast" },
                     Categories = new List<CategoryModel> { categories[0], categories[1] },
-                    ImagePath = "./Images/Products/bagel.webp"
+                    ImagePath = "./Data/Images/Products/bagel.webp"
                 };
 
                 var veganBrownie = new ProductModel
@@ -73,7 +73,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Flour", "Cocoa Powder", "Sugar", "Vegetable Oil", "Water" },
                     FilterTags = new List<string> { "Dessert", "Vegan", "Chocolate" },
                     Categories = new List<CategoryModel> { categories[0], categories[3] },
-                    ImagePath = "./Images/Products/vegan-brownie.webp"
+                    ImagePath = "./Data/Images/Products/vegan-brownie.webp"
                 };
 
                 var glutenFreeMuffin = new ProductModel
@@ -84,7 +84,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Gluten-Free Flour", "Sugar", "Eggs", "Butter", "Milk" },
                     FilterTags = new List<string> { "Dessert", "Gluten-Free", "Muffin" },
                     Categories = new List<CategoryModel> { categories[0], categories[3] },
-                    ImagePath = "./Images/Products/gluten-free-muffin.webp"
+                    ImagePath = "./Data/Images/Products/gluten-free-muffin.webp"
                 };
 
                 // Add products to the context

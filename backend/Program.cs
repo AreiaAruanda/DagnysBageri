@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add necessary variables to the configuration
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 // Adding JWT Key and checking if it is missing
 string? jwtKey = builder.Configuration["Jwt:Key"];
@@ -90,7 +91,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     SeedData.SeedProductsAndCategories(services);
     SeedData.SeedUsers(services).Wait();
-    // SeedData.ClearDatabaseAsync(services).Wait(); // Uncomment to clear the database
+    //SeedData.ClearDatabaseAsync(services).Wait(); // Uncomment to clear the database
 }
 
 app.Run();
