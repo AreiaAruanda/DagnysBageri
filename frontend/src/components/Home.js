@@ -1,7 +1,7 @@
 import React from 'react';
 import './Home.css';
 import cardImage from '../assets/mormors_cookie.png';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo_circle.png';
 
 // Functional component for the Home page
 const Home = () => {
