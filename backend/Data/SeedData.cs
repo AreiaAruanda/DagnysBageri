@@ -21,17 +21,18 @@ namespace backend.Data
                 // Create a list of categories
                 var categories = new List<CategoryModel>
                 {
-                    new CategoryModel { Name ="Bakery", Products = new List<ProductModel>() },
-                    new CategoryModel { Name ="Bread", Products = new List<ProductModel>() },
-                    new CategoryModel { Name ="Pastry", Products = new List<ProductModel>() },
-                    new CategoryModel { Name ="Desserts", Products = new List<ProductModel>() }
+                    new CategoryModel { Name = "Classic Breads", Products = new List<ProductModel>() },         // Hearty loaves, farmhouse bread, sourdough, etc.
+                    new CategoryModel { Name = "Grandma’s Pastries", Products = new List<ProductModel>() },     // Cinnamon buns, almond twists, Danish pastries
+                    new CategoryModel { Name = "Homemade Cakes", Products = new List<ProductModel>() },         // Layer cakes, old-fashioned sponge cakes, cupcakes
+                    new CategoryModel { Name = "Warm Drinks & Coffee", Products = new List<ProductModel>() },   // Homebrewed coffee, teas, and hot cocoa
+                    new CategoryModel { Name = "Hearty Sandwiches", Products = new List<ProductModel>() }       // Homemade sandwiches with fresh bread and classic fillings
                 };
 
-                // Add categories to the context
-                context.Categories.AddRange(categories);
-                context.SaveChanges();
+            // Add categories to the context
+            context.Categories.AddRange(categories);
+            context.SaveChanges();
 
-                // Create product instances
+            // Create product instances
                 var sourdoughBread = new ProductModel
                 {
                     Name = "Sourdough Bread",
@@ -39,8 +40,42 @@ namespace backend.Data
                     Price = 4.99M,
                     Ingredients = new List<string> { "Flour", "Water", "Salt", "Yeast" },
                     FilterTags = new List<string> { "Bread", "Sourdough", "Vegan" },
-                    Categories = new List<CategoryModel> { categories[0], categories[1] },
-                    ImagePath = "./Data/Images/Products/sourdough-bread.webp"
+                    Categories = new List<CategoryModel> { categories[0] },  // Classic Breads
+                    ImagePath = "./Images/Products/sourdough-bread.webp"
+                };
+
+                var farmhouseBread = new ProductModel
+                {
+                    Name = "Farmhouse Bread",
+                    Description = "A hearty loaf made with whole grains.",
+                    Price = 5.49M,
+                    Ingredients = new List<string> { "Whole Wheat Flour", "Water", "Yeast", "Salt" },
+                    FilterTags = new List<string> { "Bread", "Whole Grain" },
+                    Categories = new List<CategoryModel> { categories[0] },  // Classic Breads
+                    ImagePath = "./Images/Products/farmhouse-bread.webp"
+                };
+
+                // Grandma’s Pastries
+                var cinnamonBun = new ProductModel
+                {
+                    Name = "Cinnamon Bun",
+                    Description = "A sweet roll filled with cinnamon and sugar.",
+                    Price = 2.49M,
+                    Ingredients = new List<string> { "Flour", "Sugar", "Cinnamon", "Butter" },
+                    FilterTags = new List<string> { "Pastry", "Cinnamon" },
+                    Categories = new List<CategoryModel> { categories[1] },  // Grandma’s Pastries
+                    ImagePath = "./Images/Products/cinnamon-bun.webp"
+                };
+
+                var almondTwist = new ProductModel
+                {
+                    Name = "Almond Twist",
+                    Description = "A flaky pastry twisted with almond filling.",
+                    Price = 2.99M,
+                    Ingredients = new List<string> { "Flour", "Almond Paste", "Butter", "Sugar" },
+                    FilterTags = new List<string> { "Pastry", "Almond" },
+                    Categories = new List<CategoryModel> { categories[1] },  // Grandma’s Pastries
+                    ImagePath = "./Images/Products/almond-twist.webp"
                 };
 
                 var chocolateCroissant = new ProductModel
@@ -50,19 +85,8 @@ namespace backend.Data
                     Price = 2.99M,
                     Ingredients = new List<string> { "Flour", "Butter", "Chocolate", "Sugar", "Yeast" },
                     FilterTags = new List<string> { "Pastry", "Chocolate", "Breakfast" },
-                    Categories = new List<CategoryModel> { categories[0], categories[2] },
-                    ImagePath = "./Data/Images/Products/chocolate-croissant.webp"
-                };
-
-                var bagel = new ProductModel
-                {
-                    Name = "Bagel",
-                    Description = "A classic bagel, perfect for breakfast.",
-                    Price = 1.49M,
-                    Ingredients = new List<string> { "Flour", "Water", "Salt", "Yeast", "Sugar" },
-                    FilterTags = new List<string> { "Bread", "Bagel", "Breakfast" },
-                    Categories = new List<CategoryModel> { categories[0], categories[1] },
-                    ImagePath = "./Data/Images/Products/bagel.webp"
+                    Categories = new List<CategoryModel> { categories[1] },  // Grandma’s Pastries
+                    ImagePath = "./Images/Products/chocolate-croissant.webp"
                 };
 
                 var veganBrownie = new ProductModel
@@ -72,8 +96,8 @@ namespace backend.Data
                     Price = 3.49M,
                     Ingredients = new List<string> { "Flour", "Cocoa Powder", "Sugar", "Vegetable Oil", "Water" },
                     FilterTags = new List<string> { "Dessert", "Vegan", "Chocolate" },
-                    Categories = new List<CategoryModel> { categories[0], categories[3] },
-                    ImagePath = "./Data/Images/Products/vegan-brownie.webp"
+                    Categories = new List<CategoryModel> { categories[1] },
+                    ImagePath = "./Images/Products/vegan-brownie.webp"
                 };
 
                 var glutenFreeMuffin = new ProductModel
@@ -83,19 +107,99 @@ namespace backend.Data
                     Price = 2.99M,
                     Ingredients = new List<string> { "Gluten-Free Flour", "Sugar", "Eggs", "Butter", "Milk" },
                     FilterTags = new List<string> { "Dessert", "Gluten-Free", "Muffin" },
-                    Categories = new List<CategoryModel> { categories[0], categories[3] },
-                    ImagePath = "./Data/Images/Products/gluten-free-muffin.webp"
+                    Categories = new List<CategoryModel> { categories[1] },
+                    ImagePath = "./Images/Products/gluten-free-muffin.webp"
+                };
+
+
+                // Homemade Cakes
+                var layerCake = new ProductModel
+                {
+                    Name = "Chocolate Layer Cake",
+                    Description = "Rich chocolate cake layered with chocolate frosting.",
+                    Price = 15.99M,
+                    Ingredients = new List<string> { "Flour", "Cocoa Powder", "Sugar", "Eggs", "Butter" },
+                    FilterTags = new List<string> { "Cake", "Chocolate" },
+                    Categories = new List<CategoryModel> { categories[2] },  // Homemade Cakes
+                    ImagePath = "./Images/Products/chocolate-layer-cake.webp"
+                };
+
+                var redVelvetCake = new ProductModel
+                {
+                    Name = "Red Velvet Cake",
+                    Description = "A moist red velvet cake with cream cheese frosting.",
+                    Price = 18.99M,
+                    Ingredients = new List<string> { "Flour", "Sugar", "Cocoa Powder", "Eggs", "Butter", "Red Food Coloring" },
+                    FilterTags = new List<string> { "Cake", "Red Velvet" },
+                    Categories = new List<CategoryModel> { categories[2] },  // Homemade Cakes
+                    ImagePath = "./Images/Products/red-velvet-cake.webp"
+                };
+
+                // Warm Drinks & Coffee
+                var homebrewedCoffee = new ProductModel
+                {
+                    Name = "Homebrewed Coffee",
+                    Description = "Freshly brewed coffee made from high-quality beans.",
+                    Price = 2.49M,
+                    Ingredients = new List<string> { "Coffee Beans", "Water" },
+                    FilterTags = new List<string> { "Coffee", "Beverage" },
+                    Categories = new List<CategoryModel> { categories[3] },  // Warm Drinks & Coffee
+                    ImagePath = "./Images/Products/homebrewed-coffee.webp"
+                };
+
+                var hotChocolate = new ProductModel
+                {
+                    Name = "Hot Chocolate",
+                    Description = "Rich hot chocolate made with real cocoa.",
+                    Price = 2.99M,
+                    Ingredients = new List<string> { "Cocoa Powder", "Sugar", "Milk", "Vanilla" },
+                    FilterTags = new List<string> { "Beverage", "Chocolate" },
+                    Categories = new List<CategoryModel> { categories[3] },  // Warm Drinks & Coffee
+                    ImagePath = "./Images/Products/hot-chocolate.webp"
+                };
+
+                // Hearty Sandwiches
+                var hamAndCheeseSandwich = new ProductModel
+                {
+                    Name = "Ham and Cheese Sandwich",
+                    Description = "Classic ham and cheese sandwich on fresh bread.",
+                    Price = 4.99M,
+                    Ingredients = new List<string> { "Bread", "Ham", "Cheese", "Lettuce" },
+                    FilterTags = new List<string> { "Sandwich", "Ham" },
+                    Categories = new List<CategoryModel> { categories[4] },  // Hearty Sandwiches
+                    ImagePath = "./Images/Products/ham-and-cheese-sandwich.webp"
+                };
+
+                var smokedSalmonSandwich = new ProductModel
+                {
+                    Name = "Smoked Salmon Sandwich",
+                    Description = "Delicious smoked salmon on artisanal bread.",
+                    Price = 6.49M,
+                    Ingredients = new List<string> { "Bread", "Smoked Salmon", "Cream Cheese", "Capers" },
+                    FilterTags = new List<string> { "Sandwich", "Salmon" },
+                    Categories = new List<CategoryModel> { categories[4] },  // Hearty Sandwiches
+                    ImagePath = "./Images/Products/smoked-salmon-sandwich.webp"
                 };
 
                 // Add products to the context
-                context.Products.AddRange(sourdoughBread, chocolateCroissant, bagel, veganBrownie, glutenFreeMuffin);
+                context.Products.AddRange(
+                    sourdoughBread, farmhouseBread,
+                    cinnamonBun, almondTwist, chocolateCroissant,
+                    layerCake, redVelvetCake, veganBrownie,
+                    homebrewedCoffee, hotChocolate,
+                    hamAndCheeseSandwich, smokedSalmonSandwich, glutenFreeMuffin
+                );
+
                 context.SaveChanges();
 
                 // Update categories with products
-                categories[0].Products.AddRange(new[] { sourdoughBread, chocolateCroissant, bagel, veganBrownie, glutenFreeMuffin });
-                categories[1].Products.AddRange(new[] { sourdoughBread, bagel });
-                categories[2].Products.Add(chocolateCroissant);
-                categories[3].Products.AddRange(new[] { veganBrownie, glutenFreeMuffin });
+                categories[0].Products.AddRange(new[] { sourdoughBread, farmhouseBread });  // Classic Breads
+                categories[1].Products.AddRange(new[] { cinnamonBun, almondTwist, veganBrownie, chocolateCroissant, glutenFreeMuffin }); // Grandma’s Pastries
+                categories[2].Products.AddRange(new[] { layerCake, redVelvetCake});  // Homemade Cakes
+                categories[3].Products.AddRange(new[] { homebrewedCoffee, hotChocolate });  // Warm Drinks & Coffee
+                categories[4].Products.AddRange(new[] { hamAndCheeseSandwich, smokedSalmonSandwich });  // Hearty Sandwiches
+
+
 
                 // Save changes to the context
                 context.SaveChanges();
@@ -114,7 +218,7 @@ namespace backend.Data
             }
 
             // Create a new user instance
-            var user = new IdentityUser 
+            var user = new IdentityUser
             {
                 UserName = "admin@example.com",
                 Email = "admin@example.com",
