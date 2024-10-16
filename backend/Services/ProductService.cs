@@ -38,7 +38,6 @@ public class ProductService : IProductService
         {
             string thumbnailPath = _imageService.GetThumbnailPath(product.ImagePath);
             string base64String = _imageService.GetBase64String(thumbnailPath);
-            List<string> categories = product.Categories.Select(c => c.Name).ToList();
 
             return new ProductViewModel
             {
@@ -48,7 +47,13 @@ public class ProductService : IProductService
                 Price = product.Price,
                 FilterTags = product.FilterTags,
                 Ingredients = product.Ingredients,
-                Categories = categories,
+                Categories = product.Categories.Select(c 
+                    => new CategoryViewModel
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        CategoryURL = c.CategoryURL
+                    }).ToList(),
                 Thumbnail = base64String
             };
         }

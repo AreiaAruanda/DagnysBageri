@@ -10,5 +10,7 @@ namespace backend.Models
 
         // List of products that belong to this category
         public required List<ProductModel> Products { get; set; }
+
+        public required string CategoryURL { get; set; }
     }
 }

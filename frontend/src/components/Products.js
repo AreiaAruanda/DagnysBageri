@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 // Functional component for the Products page
 const Products = () => {
     const [products, setProducts] = useState([]);  // State to store the products
     const [loading, setLoading] = useState(true);  // State to show loading spinner
     const [error, setError] = useState(null);      // State to handle errors
+    const { category } = useParams();              // Get the category from the URL
 
     // Function to fetch products from the API
     const fetchProducts = async () => {
@@ -21,6 +23,15 @@ const Products = () => {
             setLoading(false);      // Stop loading when request completes
         }
     };
+
+    const filteredProducts = category
+        ? products.filter(product => 
+            product.categories.some(cat => cat.categoryURL === category))
+        : products;
+
+    const categoryName = filteredProducts.length > 0
+        ? filteredProducts[0].categories.find(cat => cat.categoryURL === category)?.name
+        : 'Products';
 
     // Fetch products when the component mounts
     useEffect(() => {
@@ -40,10 +51,10 @@ const Products = () => {
     return (
         <div className="background">
             <div className="container">
-                <h2>Products</h2>
+                <h2>{categoryName}</h2>
                 <div className="row">
-                    {products.length > 0 ? (
-                        products.map((product) => (
+                    {filteredProducts.length > 0 ? (
+                        filteredProducts.map((product) => (
                             <div key={product.id} className="col-md-4">
                                 <div className="card mb-4">
                                     <img

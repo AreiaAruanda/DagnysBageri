@@ -26,7 +26,7 @@ namespace backend.ViewModels
         public List<string>? Ingredients { get; set; }
 
         // List of categories the product belongs to
-        public List<string>? Categories { get; set; }
+        public List<CategoryViewModel>? Categories { get; set; }
         
         public string? Thumbnail { get; set; }
 

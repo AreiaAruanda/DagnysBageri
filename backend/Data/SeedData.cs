@@ -21,11 +21,11 @@ namespace backend.Data
                 // Create a list of categories
                 var categories = new List<CategoryModel>
                 {
-                    new CategoryModel { Name = "Classic Breads", Products = new List<ProductModel>() },         // Hearty loaves, farmhouse bread, sourdough, etc.
-                    new CategoryModel { Name = "Grandma’s Pastries", Products = new List<ProductModel>() },     // Cinnamon buns, almond twists, Danish pastries
-                    new CategoryModel { Name = "Homemade Cakes", Products = new List<ProductModel>() },         // Layer cakes, old-fashioned sponge cakes, cupcakes
-                    new CategoryModel { Name = "Warm Drinks & Coffee", Products = new List<ProductModel>() },   // Homebrewed coffee, teas, and hot cocoa
-                    new CategoryModel { Name = "Hearty Sandwiches", Products = new List<ProductModel>() }       // Homemade sandwiches with fresh bread and classic fillings
+                    new CategoryModel { Name = "Classic Breads", Products = new List<ProductModel>(), CategoryURL = "classic-breads" },         // Hearty loaves, farmhouse bread, sourdough, etc.
+                    new CategoryModel { Name = "Grandma’s Pastries", Products = new List<ProductModel>(), CategoryURL = "grandmas-pastries" },     // Cinnamon buns, almond twists, Danish pastries
+                    new CategoryModel { Name = "Homemade Cakes", Products = new List<ProductModel>(), CategoryURL = "homemade-cakes" },         // Layer cakes, old-fashioned sponge cakes, cupcakes
+                    new CategoryModel { Name = "Warm Drinks & Coffee", Products = new List<ProductModel>(), CategoryURL = "warm-drinks-coffee" },   // Homebrewed coffee, teas, and hot cocoa
+                    new CategoryModel { Name = "Hearty Sandwiches", Products = new List<ProductModel>(), CategoryURL = "hearty-sandwiches" }       // Homemade sandwiches with fresh bread and classic fillings
                 };
 
             // Add categories to the context
