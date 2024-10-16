@@ -4,14 +4,14 @@ using Microsoft.Extensions.Logging;
 using System.IO.Abstractions;
 using backend.Services;
 
-
-public class ImageServiceTests
+namespace backend.Tests.Unit;
+public class ImageServiceUnitTests
 {
     private readonly ImageService _imageService;
     private readonly Mock<IFileSystem> _fileSystemMock;
     private readonly Mock<ILogger<ImageService>> _loggerMock;
 
-    public ImageServiceTests()
+    public ImageServiceUnitTests()
     {
         _fileSystemMock = new Mock<IFileSystem>();
         _loggerMock = new Mock<ILogger<ImageService>>();
