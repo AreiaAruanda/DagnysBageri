@@ -2,6 +2,7 @@ import React from 'react'; // Import React library
 import ReactDOM from 'react-dom/client'; // Import ReactDOM for rendering the app
 import './index.css'; // Import the CSS file for styling
 import App from './App'; // Import the main App component
+import './App.css'; 
 import reportWebVitals from './reportWebVitals'; // Import reportWebVitals for performance measurement
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS for styling
 

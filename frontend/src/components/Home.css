@@ -1,0 +1,82 @@
+/* Home.css */
+
+.container {
+    background-color: rgba(255, 213, 213, 0.99); /* Semi-opaque white */
+    padding: 20px; /* Padding inside the container */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    width: 60% !important; /* Set width to 60% of the page */
+    height: 65vh; /* Set height to 50% of the viewport height */
+    display: flex; /* Use flexbox to arrange content */
+    flex-direction: column; /* Arrange children vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    overflow: hidden;
+}
+
+.logo img {
+    height:23vh !important;
+    width:auto;
+    max-width: 100%;
+}
+
+.cookie-button {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    width: 150px; 
+    transition: transform 0.3s ease;
+}
+
+.cookie-button:hover {
+    transform: scale(1.07); /* Scale up the button by 10% on hover */
+}
+
+.cookie {
+    width: 100%; /* Image will inherit width from .cookie-button */
+    height: auto;
+    display: block; /* Ensure image doesn’t have any space around it */
+}
+
+.button-text {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    z-index: 1; /* Ensure text appears above the image */
+    padding: 5px 10px; /* Padding to make the text more button-like */
+}
+
+.category-links {
+    padding: 20px 20px; /* Adjusted padding to bring the rows closer */
+    text-align: center;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap; /* Allows links to wrap as needed */
+    justify-content: center; /* Centers links */
+    gap: 8px 5px; /* Closer spacing between links */
+    font-family: 'Montserrat', sans-serif; /* New font for better readability */
+    font-size: 0.85em; /* Slightly smaller size to keep text compact */
+}
+
+.category-links a {
+    color: black;
+    text-decoration: none;
+    font-weight: 500; /* Slightly bolder to enhance visibility */
+    padding: 3px 8px; /* Reduced padding for a tighter layout */
+    letter-spacing: 0.4px; /* Adjusted letter spacing for clarity */
+    white-space: nowrap; /* Prevents breaking within links */
+}
+
+.category-links a:hover {
+    text-decoration: underline;
+}
+
+.category-links a:hover {
+    text-decoration: underline;
+}
+
