@@ -1,24 +1,27 @@
 using backend.Interfaces;
+using System.IO.Abstractions;
 
 namespace backend.Services;
 public class ImageService : IImageService
 {
     private readonly ILogger<ImageService> _logger;
+    private readonly IFileSystem _fileSystem;
 
-    public ImageService(ILogger<ImageService> logger)
+    public ImageService(IFileSystem filesystem, ILogger<ImageService> logger)
     {
         _logger = logger;
+        _fileSystem = filesystem;
     }
 
     public string GetThumbnailPath(string imagePath)
     {
         try
         {
-            string directory = Path.GetDirectoryName(imagePath) ?? throw new ArgumentException("Invalid image path", nameof(imagePath));
-            string filename = Path.GetFileNameWithoutExtension(imagePath);
-            string extension = Path.GetExtension(imagePath);
+            string directory = _fileSystem.Path.GetDirectoryName(imagePath)!;
+            string filename = _fileSystem.Path.GetFileNameWithoutExtension(imagePath);
+            string extension = _fileSystem.Path.GetExtension(imagePath);
 
-            return Path.Combine(directory, $"{filename}-thumb{extension}");
+            return _fileSystem.Path.Combine(directory, $"{filename}-thumb{extension}");
         }
         catch (Exception ex)
         {
@@ -31,12 +34,12 @@ public class ImageService : IImageService
     {
         try
         {
-            if (!File.Exists(imagePath))
+            if (!_fileSystem.File.Exists(imagePath))
             {
                 throw new FileNotFoundException("Image file not found", imagePath);
             }
 
-            byte[] imageBytes = File.ReadAllBytes(imagePath);
+            byte[] imageBytes = _fileSystem.File.ReadAllBytes(imagePath);
             string base64String = Convert.ToBase64String(imageBytes);
             string mimeType = "image/webp"; // Assuming all images are WebP
 
