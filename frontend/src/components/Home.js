@@ -20,11 +20,11 @@ const Home = () => {
                         </a>
                         {/*categories*/}
                         <div className="category-links">
-                            <a href="/classic-breads">CLASSIC BREADS</a>
-                            <a href="/grandmas-pastries">GRANDMA’S PASTRIES</a>
-                            <a href="/homemade-cakes">HOMEMADE CAKES</a>
-                            <a href="/warm-drinks-coffee">WARM DRINKS & COFFEE</a>
-                            <a href="/hearty-sandwiches">HEARTY SANDWICHES</a>
+                            <a href="/products/classic-breads">CLASSIC BREADS</a>
+                            <a href="/products/grandmas-pastries">GRANDMA’S PASTRIES</a>
+                            <a href="/products/homemade-cakes">HOMEMADE CAKES</a>
+                            <a href="/products/warm-drinks-coffee">WARM DRINKS & COFFEE</a>
+                            <a href="/products/hearty-sandwiches">HEARTY SANDWICHES</a>
                         </div>
                         <a href="/" className="cookie-button">
                             <img 
