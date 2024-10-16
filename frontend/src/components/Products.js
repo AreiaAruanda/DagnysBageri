@@ -53,20 +53,24 @@ const Products = () => {
         <div className="background">
             <div className="container">
                 <h2>{categoryName}</h2>
-                <div className="row">
+                <div className="row justify-content-center">
                     {filteredProducts.length > 0 ? (
                         filteredProducts.map((product) => (
-                            <div key={product.id} className="col-md-4">
-                                <div className="card mb-4">
-                                    <img
-                                        src={product.thumbnail}
-                                        className="card-img-top"
-                                        alt={product.name}
-                                    />
-                                    <div className="card-body">
-                                        <h5 className="card-title">{product.name}</h5>
-                                        <p className="card-text">{product.description}</p>
-                                        <p className="card-text">Price: {product.price}</p>
+                            <div key={product.id} className="col-sm-auto col-md-auto col-lg-auto">
+                                <div className="d-flex justify-content-center align-items-stretch h-100">
+                                    <div className="card mb-4 d-flex flex-column">
+                                        <div className="card-img-wrapper">
+                                            <img
+                                                src={product.thumbnail}
+                                                className="card-img-top"
+                                                alt={product.name}
+                                            />
+                                        </div>
+                                        <div className="card-body">
+                                            <h5 className="card-title">{product.name}</h5>
+                                            <p className="card-text">{product.description}</p>
+                                            <p className="card-text">Price: {product.price}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
