@@ -41,7 +41,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Flour", "Water", "Salt", "Yeast" },
                     FilterTags = new List<string> { "Bread", "Sourdough", "Vegan" },
                     Categories = new List<CategoryModel> { categories[0] },  // Classic Breads
-                    ImagePath = "./Images/Products/sourdough-bread.webp"
+                    ImagePath = "./Data/Images/Products/sourdough-bread.webp"
                 };
 
                 var farmhouseBread = new ProductModel
@@ -52,7 +52,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Whole Wheat Flour", "Water", "Yeast", "Salt" },
                     FilterTags = new List<string> { "Bread", "Whole Grain" },
                     Categories = new List<CategoryModel> { categories[0] },  // Classic Breads
-                    ImagePath = "./Images/Products/farmhouse-bread.webp"
+                    ImagePath = "./Data/Images/Products/farmhouse-bread.webp"
                 };
 
                 // Grandma’s Pastries
@@ -64,7 +64,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Flour", "Sugar", "Cinnamon", "Butter" },
                     FilterTags = new List<string> { "Pastry", "Cinnamon" },
                     Categories = new List<CategoryModel> { categories[1] },  // Grandma’s Pastries
-                    ImagePath = "./Images/Products/cinnamon-bun.webp"
+                    ImagePath = "./Data/Images/Products/cinnamon-bun.webp"
                 };
 
                 var almondTwist = new ProductModel
@@ -75,7 +75,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Flour", "Almond Paste", "Butter", "Sugar" },
                     FilterTags = new List<string> { "Pastry", "Almond" },
                     Categories = new List<CategoryModel> { categories[1] },  // Grandma’s Pastries
-                    ImagePath = "./Images/Products/almond-twist.webp"
+                    ImagePath = "./Data/Images/Products/almond-twist.webp"
                 };
 
                 var chocolateCroissant = new ProductModel
@@ -86,7 +86,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Flour", "Butter", "Chocolate", "Sugar", "Yeast" },
                     FilterTags = new List<string> { "Pastry", "Chocolate", "Breakfast" },
                     Categories = new List<CategoryModel> { categories[1] },  // Grandma’s Pastries
-                    ImagePath = "./Images/Products/chocolate-croissant.webp"
+                    ImagePath = "./Data/Images/Products/chocolate-croissant.webp"
                 };
 
                 var veganBrownie = new ProductModel
@@ -97,7 +97,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Flour", "Cocoa Powder", "Sugar", "Vegetable Oil", "Water" },
                     FilterTags = new List<string> { "Dessert", "Vegan", "Chocolate" },
                     Categories = new List<CategoryModel> { categories[1] },
-                    ImagePath = "./Images/Products/vegan-brownie.webp"
+                    ImagePath = "./Data/Images/Products/vegan-brownie.webp"
                 };
 
                 var glutenFreeMuffin = new ProductModel
@@ -108,7 +108,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Gluten-Free Flour", "Sugar", "Eggs", "Butter", "Milk" },
                     FilterTags = new List<string> { "Dessert", "Gluten-Free", "Muffin" },
                     Categories = new List<CategoryModel> { categories[1] },
-                    ImagePath = "./Images/Products/gluten-free-muffin.webp"
+                    ImagePath = "./Data/Images/Products/gluten-free-muffin.webp"
                 };
 
 
@@ -121,7 +121,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Flour", "Cocoa Powder", "Sugar", "Eggs", "Butter" },
                     FilterTags = new List<string> { "Cake", "Chocolate" },
                     Categories = new List<CategoryModel> { categories[2] },  // Homemade Cakes
-                    ImagePath = "./Images/Products/chocolate-layer-cake.webp"
+                    ImagePath = "./Data/Images/Products/chocolate-layer-cake.webp"
                 };
 
                 var redVelvetCake = new ProductModel
@@ -132,7 +132,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Flour", "Sugar", "Cocoa Powder", "Eggs", "Butter", "Red Food Coloring" },
                     FilterTags = new List<string> { "Cake", "Red Velvet" },
                     Categories = new List<CategoryModel> { categories[2] },  // Homemade Cakes
-                    ImagePath = "./Images/Products/red-velvet-cake.webp"
+                    ImagePath = "./Data/Images/Products/red-velvet-cake.webp"
                 };
 
                 // Warm Drinks & Coffee
@@ -144,7 +144,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Coffee Beans", "Water" },
                     FilterTags = new List<string> { "Coffee", "Beverage" },
                     Categories = new List<CategoryModel> { categories[3] },  // Warm Drinks & Coffee
-                    ImagePath = "./Images/Products/homebrewed-coffee.webp"
+                    ImagePath = "./Data/Images/Products/homebrewed-coffee.webp"
                 };
 
                 var hotChocolate = new ProductModel
@@ -155,7 +155,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Cocoa Powder", "Sugar", "Milk", "Vanilla" },
                     FilterTags = new List<string> { "Beverage", "Chocolate" },
                     Categories = new List<CategoryModel> { categories[3] },  // Warm Drinks & Coffee
-                    ImagePath = "./Images/Products/hot-chocolate.webp"
+                    ImagePath = "./Data/Images/Products/hot-chocolate.webp"
                 };
 
                 // Hearty Sandwiches
@@ -167,7 +167,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Bread", "Ham", "Cheese", "Lettuce" },
                     FilterTags = new List<string> { "Sandwich", "Ham" },
                     Categories = new List<CategoryModel> { categories[4] },  // Hearty Sandwiches
-                    ImagePath = "./Images/Products/ham-and-cheese-sandwich.webp"
+                    ImagePath = "./Data/Images/Products/ham-and-cheese-sandwich.webp"
                 };
 
                 var smokedSalmonSandwich = new ProductModel
@@ -178,7 +178,7 @@ namespace backend.Data
                     Ingredients = new List<string> { "Bread", "Smoked Salmon", "Cream Cheese", "Capers" },
                     FilterTags = new List<string> { "Sandwich", "Salmon" },
                     Categories = new List<CategoryModel> { categories[4] },  // Hearty Sandwiches
-                    ImagePath = "./Images/Products/smoked-salmon-sandwich.webp"
+                    ImagePath = "./Data/Images/Products/smoked-salmon-sandwich.webp"
                 };
 
                 // Add products to the context
