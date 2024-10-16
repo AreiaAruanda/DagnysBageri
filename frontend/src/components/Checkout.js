@@ -85,7 +85,7 @@ const Checkout = () => {
             </div>
             <div className="form-group">
               <label>Notes</label>
-              <textarea name="notes" value={customerInfo.notes} onChange={handleInputChange} maxLength="500" rows="4" cols="90"/>
+              <textarea name="notes" className='textarea' value={customerInfo.notes} onChange={handleInputChange} maxLength="500" />
             </div>
             <button type="submit" className="checkout-button">Complete Checkout</button>
           </form>

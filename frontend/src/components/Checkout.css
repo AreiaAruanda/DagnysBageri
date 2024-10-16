@@ -23,7 +23,6 @@
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    text-align: left;
 }
 
 .form-group input {
@@ -44,4 +43,10 @@
 
 .checkout-button:hover {
     background-color: #e53935;
+}
+
+.textarea {
+  width: 100%;  /* Make the textarea take up full width */
+  height: 150px; /* Set a specific height */
+  resize: vertical; /* Allow the user to resize only vertically */
 }
