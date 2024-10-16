@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Functional component for the Home page
 const Home = () => {
@@ -10,13 +11,14 @@ const Home = () => {
                 <div className="col-12 text-center">
                     {/* Main heading */}
                     <h1>Mormor Dagnys Bageri</h1>
-                    {/* Description paragraph */}
-                    <p>This is the home page of our webshop</p>
+                     {/* Description paragraph */}
+                     <p>This is the home page of our webshop</p>
+                    <p>Browse our product categories:</p>
+                    <Link to="/products" className="btn btn-primary">View Products</Link>
                 </div>
             </div>
         </div>
     );
 };
 
-// Export the Home component as the default export
 export default Home;

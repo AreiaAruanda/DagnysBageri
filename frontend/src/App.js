@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import necessary components from react-router-dom
-import Home from './components/Home'; // Import the Home component
-import './App.css'; // Import the CSS file for styling
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
+import Home from './components/Home'; 
+import Products from './components/Products'; 
+import './App.css'; 
 
 // Main App component
 function App() {
@@ -12,6 +13,8 @@ function App() {
         <Routes>
           {/* Route for the home page, rendering the Home component */}
           <Route exact path="/" element={<Home />} />
+          {/* Route for the products page*/}
+          <Route path="/products" element={<Products />} />
         </Routes>
       </div>
     </Router>
