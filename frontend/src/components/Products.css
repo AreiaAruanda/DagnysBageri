@@ -1,0 +1,15 @@
+.background {
+    min-height: 100vh; /* Full viewport height */
+    padding-top: 80px; /* Adjust this value to set the desired distance from the top */
+    display: flex; /* Flexbox for centering content */
+    align-items: flex-start; /* Align items to the start */
+    justify-content: center; /* Center horizontally */
+    text-align: center; /* Center text */
+    background-attachment: fixed; /* Fixed background image */
+}
+
+.container {
+    width: 80% !important;
+    height: fit-content;
+    margin-top: 20px;
+}

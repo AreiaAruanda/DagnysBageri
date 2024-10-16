@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import './Products.css';
 
 // Functional component for the Products page
 const Products = () => {
@@ -29,7 +30,7 @@ const Products = () => {
             product.categories.some(cat => cat.categoryURL === category))
         : products;
 
-    const categoryName = filteredProducts.length > 0
+    const categoryName = category && filteredProducts.length > 0
         ? filteredProducts[0].categories.find(cat => cat.categoryURL === category)?.name
         : 'Products';
 
