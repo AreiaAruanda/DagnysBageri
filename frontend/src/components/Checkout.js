@@ -60,32 +60,32 @@ const Checkout = () => {
           <h3>Customer Information</h3>
           <form onSubmit={(e) => { e.preventDefault(); handleCheckout(); }}>
             <div className="form-group">
-              <label>First Name:</label>
+              <label>First Name</label>
               <input type="text" name="firstName" value={customerInfo.firstName} onChange={handleInputChange} maxLength="50" required />
             </div>
             <div className="form-group">
-              <label>Last Name:</label>
+              <label>Last Name</label>
               <input type="text" name="lastName" value={customerInfo.lastName} onChange={handleInputChange} maxLength="50" required />
             </div>
             <div className="form-group">
-              <label>Email:</label>
+              <label>Email</label>
               <input type="email" name="email" value={customerInfo.email} onChange={handleInputChange} required />
             </div>
             <div className="form-group">
-              <label>Phone:</label>
+              <label>Phone</label>
               <input type="tel" name="phone" value={customerInfo.phone} onChange={handleInputChange} required />
             </div>
             <div className="form-group">
-              <label>Pickup Date:</label>
+              <label>Pickup Date</label>
               <input type="date" name="pickupDate" value={customerInfo.pickupDate} onChange={handleInputChange} required />
             </div>
             <div className="form-group">
-              <label>Order Date:</label>
+              <label>Order Date</label>
               <input type="date" name="orderDate" value={customerInfo.orderDate} readOnly />
             </div>
             <div className="form-group">
-              <label>Notes:</label>
-              <textarea name="notes" value={customerInfo.notes} onChange={handleInputChange} maxLength="500" />
+              <label>Notes</label>
+              <textarea name="notes" value={customerInfo.notes} onChange={handleInputChange} maxLength="500" rows="4" cols="90"/>
             </div>
             <button type="submit" className="checkout-button">Complete Checkout</button>
           </form>
