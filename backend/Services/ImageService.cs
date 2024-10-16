@@ -21,7 +21,9 @@ public class ImageService : IImageService
             string filename = _fileSystem.Path.GetFileNameWithoutExtension(imagePath);
             string extension = _fileSystem.Path.GetExtension(imagePath);
 
-            return _fileSystem.Path.Combine(directory, $"{filename}-thumb{extension}");
+            string thumbnailDirectory = directory.Replace("Products", "Thumbnails");
+
+            return _fileSystem.Path.Combine(thumbnailDirectory, $"{filename}-thumb{extension}");
         }
         catch (Exception ex)
         {
