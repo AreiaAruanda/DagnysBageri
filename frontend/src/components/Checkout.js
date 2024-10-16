@@ -1,15 +1,20 @@
-import React, { useContext, useState } from 'react';
-import { CartContext } from '../contexts/CartContext';
-import Cart from './Cart'; // Import the Cart component
-import './Checkout.css';  // Import the CSS file here
-import '../App.css'; // Import the CSS file for styling
+import React, { useState, useContext } from 'react';
+import { CartContext } from '../contexts/CartContext'; // Assuming you have the cart context
+import Cart from './Cart';
+import './Checkout.css';
 
 const Checkout = () => {
-  const { cart, clearCart } = useContext(CartContext);
+  const { cart, clearCart } = useContext(CartContext); // Access the cart and clearCart function
   const [customerInfo, setCustomerInfo] = useState({
-    name: '',
-    address: '',
-    email: ''
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    pickupDate: '',
+    orderDate: new Date().toISOString().split('T')[0], // Set current date by default
+    totalAmount: cart.reduce((total, item) => total + item.price * item.quantity, 0), // Calculate total cart amount
+    orderItems: cart,
+    notes: ''
   });
 
   const handleInputChange = (e) => {
@@ -18,10 +23,26 @@ const Checkout = () => {
   };
 
   const handleCheckout = () => {
-    // Simulate backend call here
+    // Here you'd typically send this info to the backend
     console.log('Customer Info:', customerInfo);
-    console.log('Cart Items:', cart);
-    clearCart();
+
+    // Example: Use fetch or axios to send the data to the backend
+    fetch('/api/checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(customerInfo),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Checkout Successful:', data);
+      clearCart(); // Clear the cart after successful checkout
+    })
+    .catch(error => {
+      console.error('Checkout Error:', error);
+    });
+
     alert('Checkout Successful!');
   };
 
@@ -32,23 +53,39 @@ const Checkout = () => {
         <h2>Checkout</h2>
 
         <div className="cart-summary">
-          <Cart /> {/* Cart component stays separate but included in the layout */}
+          <Cart />
         </div>
 
         <div className="customer-info">
           <h3>Customer Information</h3>
           <form onSubmit={(e) => { e.preventDefault(); handleCheckout(); }}>
             <div className="form-group">
-              <label>Name:</label>
-              <input type="text" name="name" value={customerInfo.name} onChange={handleInputChange} required />
+              <label>First Name:</label>
+              <input type="text" name="firstName" value={customerInfo.firstName} onChange={handleInputChange} maxLength="50" required />
             </div>
             <div className="form-group">
-              <label>Address:</label>
-              <input type="text" name="address" value={customerInfo.address} onChange={handleInputChange} required />
+              <label>Last Name:</label>
+              <input type="text" name="lastName" value={customerInfo.lastName} onChange={handleInputChange} maxLength="50" required />
             </div>
             <div className="form-group">
               <label>Email:</label>
               <input type="email" name="email" value={customerInfo.email} onChange={handleInputChange} required />
+            </div>
+            <div className="form-group">
+              <label>Phone:</label>
+              <input type="tel" name="phone" value={customerInfo.phone} onChange={handleInputChange} required />
+            </div>
+            <div className="form-group">
+              <label>Pickup Date:</label>
+              <input type="date" name="pickupDate" value={customerInfo.pickupDate} onChange={handleInputChange} required />
+            </div>
+            <div className="form-group">
+              <label>Order Date:</label>
+              <input type="date" name="orderDate" value={customerInfo.orderDate} readOnly />
+            </div>
+            <div className="form-group">
+              <label>Notes:</label>
+              <textarea name="notes" value={customerInfo.notes} onChange={handleInputChange} maxLength="500" />
             </div>
             <button type="submit" className="checkout-button">Complete Checkout</button>
           </form>

@@ -28,7 +28,7 @@ const Cart = () => {
             Clear Cart
           </button>
         )}
-        <div className="cart-total">Total: ${cartTotal.toFixed(2)}</div>
+        <div className="cart-total">Total ${cartTotal.toFixed(2)}</div>
       </div>
     </div>
   );
