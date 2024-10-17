@@ -26,10 +26,10 @@ namespace backend.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByEmailAsync(model.Username);
             if(user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 var token = GenerateJwtToken(user);
@@ -60,7 +60,7 @@ namespace backend.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
         
-        [HttpDelete("logout")]
+        [HttpDelete]
         [Authorize]
         public async Task<IActionResult> Logout()
         {
