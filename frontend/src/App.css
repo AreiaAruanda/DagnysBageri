@@ -12,11 +12,22 @@
     padding: 20px;
 }
 
+.logo {
+  width: 100%; /* Full width to allow for centering */
+  margin-bottom: 20px; /* Optional space between logo and next container */
+  text-align: center; /* Center the image within this container */
+}
+
 .logo img {
   height:23vh !important;
   width:auto;
   max-width: 100%;
-  align-items: center;
+} 
+
+.filter {
+  height: 20px;
+  width: auto;
+  padding: 6%;
 }
 
 .gloock-regular {
