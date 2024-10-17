@@ -18,6 +18,12 @@ const Navbar = () => {
         <li>
           <Link to="/contact">CONTACTS</Link>
         </li>
+        <li>
+          <Link to="/login">LOGIN</Link>
+        </li>
+        <li>
+          <Link to="/logout">LOGOUT</Link>
+        </li>
       </ul>
       <div className="cart-icon">
         <Link to="/cart">
