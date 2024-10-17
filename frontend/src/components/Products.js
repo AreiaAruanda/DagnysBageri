@@ -53,7 +53,7 @@ const Products = () => {
 
     return (
         <div className="background">
-            <div className="container">
+            <div className="product-container">
                 <h2 className="title">{categoryName}</h2>
                 <div className="row justify-content-center">
                     {filteredProducts.length > 0 ? (

@@ -10,16 +10,24 @@
     background-attachment: fixed; /* Fixed background image */
 }
 
-.container {
+.product-container {
+    background-color: rgba(255, 213, 213, 0.99); /* Semi-opaque white */
+    padding: 20px; /* Padding inside the container */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
     width: 85% !important;
     height: fit-content;
     margin-top: 20px;
     display: flex !important;
     gap: 10px;
+    flex-direction: column; /* Arrange children vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    overflow: hidden;
 }
 
 .card {
-    width: 175px;
+    width: 250px;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add a smooth transition on hover */
 }
 
