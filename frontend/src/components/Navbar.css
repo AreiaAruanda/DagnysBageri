@@ -1,0 +1,49 @@
+/* src/components/Navbar.css */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  margin-right: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #08466b;
+}
+
+/* Style for the cart icon */
+.cart-icon {
+  margin-right: 20px;
+}
+
+.cart-icon a {
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.cart-icon a:hover {
+  color: #08466b;
+}
