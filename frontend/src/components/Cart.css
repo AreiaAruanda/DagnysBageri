@@ -36,7 +36,7 @@
 }
 
 .cart-item-remove {
-    background-color: #f44336;
+    background-color: #08466b;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -46,7 +46,7 @@
 }
 
 .cart-item-remove:hover {
-    background-color: #e53935;
+    background-color: #08466b;
 }
 
 .cart-total {
@@ -57,7 +57,7 @@
 }
 
 .clear-cart-button {
-    background-color: #ff5722;
+    background-color: #08466b;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -71,7 +71,7 @@
 }
 
 .clear-cart-button:hover {
-    background-color: #e64a19;
+    background-color: #08466b;
 }
 
 /* Add this CSS to your existing Cart.css */
@@ -89,7 +89,7 @@
 }
 
 .clear-cart-button {
-    background-color: #ff5722;
+    background-color: #08466b;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -99,5 +99,5 @@
 }
 
 .clear-cart-button:hover {
-    background-color: #e64a19;
+    background-color: #08466b;
 }

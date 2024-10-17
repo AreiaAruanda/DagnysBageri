@@ -33,7 +33,7 @@
 }
 
 .checkout-button {
-    background-color: #f44336;
+    background-color: #08466b;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -42,7 +42,7 @@
 }
 
 .checkout-button:hover {
-    background-color: #e53935;
+    background-color: #08466b;
 }
 
 .textarea {
