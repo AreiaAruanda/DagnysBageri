@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import './Products.css';
 import { CartContext} from '../contexts/CartContext'; // Import the Cart Context after Merging with makeCart branch
+import logo from '../assets/logo_circle.png';
 
 // Functional component for the Products page
 const Products = () => {
@@ -54,7 +55,7 @@ const Products = () => {
     return (
         <div className="background">
             <div className="product-container">
-                <h2 className="title">{categoryName}</h2>
+                <h1 className="title">{categoryName}</h1>
                 <div className="row justify-content-center">
                     {filteredProducts.length > 0 ? (
                         filteredProducts.map((product) => (

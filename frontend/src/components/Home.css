@@ -14,12 +14,6 @@
     overflow: hidden;
 }
 
-.logo img {
-    height:23vh !important;
-    width:auto;
-    max-width: 100%;
-}
-
 .cookie-button {
     position: relative;
     display: inline-block;

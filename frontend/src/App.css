@@ -8,6 +8,15 @@
     align-items: center; /* Center vertically */
     justify-content: center; /* Center horizontally */
     text-align: center; /* Center text */
+    flex-direction: column;
+    padding: 20px;
+}
+
+.logo img {
+  height:23vh !important;
+  width:auto;
+  max-width: 100%;
+  align-items: center;
 }
 
 .gloock-regular {
