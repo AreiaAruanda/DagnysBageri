@@ -95,7 +95,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     SeedData.SeedProductsAndCategories(services);
     SeedData.SeedUsers(services).Wait();
-    //SeedData.ClearDatabaseAsync(services).Wait(); // Uncomment to clear the database
+    // SeedData.ClearDatabaseAsync(services).Wait(); // Uncomment to clear the database
 }
 
 app.Run();
