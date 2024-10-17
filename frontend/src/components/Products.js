@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import './Products.css';
-//import { CartContext} from '../contexts/CartContext'; // Import the Cart Context after Merging with makeCart branch
+import { CartContext} from '../contexts/CartContext'; // Import the Cart Context after Merging with makeCart branch
 
 // Functional component for the Products page
 const Products = () => {
@@ -9,7 +9,7 @@ const Products = () => {
     const [loading, setLoading] = useState(true);  // State to show loading spinner
     const [error, setError] = useState(null);      // State to handle errors
     const { category } = useParams();              // Get the category from the URL
-    //const { addToCart } = useContext(CartContext); // Access addToCart from CartContext after Merging with makeCart branch
+    const { addToCart } = useContext(CartContext); // Access addToCart from CartContext after Merging with makeCart branch
 
     // Function to fetch products from the API
     const fetchProducts = async () => {
@@ -54,7 +54,7 @@ const Products = () => {
     return (
         <div className="background">
             <div className="container">
-                <h2>{categoryName}</h2>
+                <h2 className="title">{categoryName}</h2>
                 <div className="row justify-content-center">
                     {filteredProducts.length > 0 ? (
                         filteredProducts.map((product) => (
@@ -68,11 +68,11 @@ const Products = () => {
                                                 alt={product.name}
                                             />
                                         </div>
-                                        <div className="card-body">
+                                        <div className="card-body d-flex flex-column">
                                             <h5 className="card-title">{product.name}</h5>
                                             <p className="card-text">{product.description}</p>
-                                            <p className="card-text">Price: {product.price}</p>
-                                        {/*    <button onClick={() => addToCart(product)}>Add to Cart</button>   Remove commenting after merge with makeCart  */}
+                                            <p id="price" className="card-text">Price: ${product.price}</p>
+                                            <button className="button" onClick={() => addToCart(product)}>Add to Cart</button>
                                         </div>
                                     </div>
                                 </div>
