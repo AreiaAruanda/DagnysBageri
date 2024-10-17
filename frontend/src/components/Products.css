@@ -81,7 +81,10 @@
     margin-top: auto;
 }
 
-
+.filter-header {
+    padding-bottom:10px;
+    padding-top:5px;
+}
 
 .filter-popup {
     position: fixed;
@@ -97,6 +100,7 @@
 }
 
 .popup-content {
+    position: relative; /* Add relative positioning to contain the absolutely positioned close button */
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -108,17 +112,29 @@
 .close {
     cursor: pointer;
     font-size: 20px;
-    float: right;
-    margin-bottom: 10px;
+    position: absolute; /* Position it absolutely within the container */
+    top: 10px; /* Add some space from the top */
+    right: 10px; /* Align it to the right */
+    color: #333; /* Optional: Set the color for visibility */
 }
 
 .filter-category {
     margin-bottom: 20px; /* Spacing between categories */
 }
 
-h4 {
+.filter-text {
+    font-family: 'Montserrat', sans-serif;
+}
+
+h5 {
     cursor: pointer; /* Indicate clickable headings */
     margin: 10px 0; /* Spacing above and below category titles */
+    font-family: 'Montserrat', sans-serif;
+}
+
+h3 {
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px;
 }
 
 .filter-options {
