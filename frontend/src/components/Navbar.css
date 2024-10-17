@@ -25,12 +25,13 @@ nav li {
 
 nav a {
   text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
   color: #333;
   font-weight: bold;
 }
 
 nav a:hover {
-  color: #007bff;
+  color: #08466b;
 }
 
 /* Style for the cart icon */
@@ -44,5 +45,5 @@ nav a:hover {
 }
 
 .cart-icon a:hover {
-  color: #007bff;
+  color: #08466b;
 }

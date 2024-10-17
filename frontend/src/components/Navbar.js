@@ -10,13 +10,13 @@ const Navbar = () => {
     <nav>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/">HOME</Link>
         </li>
         <li>
-          <Link to="/products">Products</Link>
+          <Link to="/products">PRODUCTS</Link>
         </li>
         <li>
-          <Link to="/contact">Contact</Link>
+          <Link to="/contact">CONTACTS</Link>
         </li>
       </ul>
       <div className="cart-icon">
