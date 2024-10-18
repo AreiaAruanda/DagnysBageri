@@ -31,7 +31,7 @@ nav a {
 }
 
 nav a:hover {
-  color: #08466b;
+  color: #f97d63;
 }
 
 /* Style for the cart icon */
@@ -45,5 +45,5 @@ nav a:hover {
 }
 
 .cart-icon a:hover {
-  color: #08466b;
+  color: #f97d63;
 }

@@ -12,11 +12,71 @@
     padding: 20px;
 }
 
+.button {
+  background-color: #08466b;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.button:hover {
+  background-color: #f97d63;
+}
+
+.cookie-button {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  width: 150px; 
+  transition: transform 0.3s ease;
+}
+
+.cookie-button:hover {
+  transform: scale(1.07); /* Scale up the button by 10% on hover */
+}
+
+.cookie {
+  width: 100%; /* Image will inherit width from .cookie-button */
+  height: auto;
+  display: block; /* Ensure image doesn’t have any space around it */
+}
+
+.button-text {
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  z-index: 1; /* Ensure text appears above the image */
+  padding: 5px 10px; /* Padding to make the text more button-like */
+}
+
+.logo {
+  width: 100%; /* Full width to allow for centering */
+  margin-bottom: 20px; 
+  text-align: center; /* Center the image within this container */
+}
+
 .logo img {
   height:23vh !important;
   width:auto;
   max-width: 100%;
-  align-items: center;
+} 
+
+.filter {
+  height: 30px;
+  width: auto;
+  padding: 6%;
 }
 
 .gloock-regular {
@@ -36,4 +96,16 @@ h1 {
     font-family: "Leckerli One", cursive;
     font-weight: 400;
     font-style: normal;
+}
+
+h3 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+h5 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+p {
+  font-family: 'Montserrat', sans-serif;
 }
