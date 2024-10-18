@@ -13,7 +13,6 @@ const Checkout = () => {
     pickupDate: '',
     orderDate: new Date().toISOString().split('T')[0], // Set current date by default
     totalAmount: cart.reduce((total, item) => total + item.price * item.quantity, 0), // Calculate total cart amount
-    orderItems: cart,
     notes: ''
   });
 
@@ -22,19 +21,36 @@ const Checkout = () => {
     setCustomerInfo({ ...customerInfo, [name]: value });
   };
 
-  const handleCheckout = () => {
-    // Here you'd typically send this info to the backend
-    console.log('Customer Info:', customerInfo);
+ const handleCheckout = () => {
+  const formattedOrderItems = cart.map(item => ({
+    ProductId: item.id, // Assuming item.id refers to the product
+    Quantity: item.quantity,
+    // The 'Product' and 'Order' fields are handled on the backend, so we don't need them here
+  }));
 
-    // Example: Use fetch or axios to send the data to the backend
-    fetch('/api/checkout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(customerInfo),
+  const orderData = {
+    ...customerInfo,
+    orderItems: formattedOrderItems, // Replace cart with formatted order items
+  };
+
+  console.log('Customer Info:', orderData);
+
+
+  // Example: Use fetch or axios to send the data to the backend
+  fetch('http://localhost:5032/api/v1/orders', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(orderData),
+  })
+      .then(response => {
+      if (response.status === 201) {
+        return response.json(); // Return the response JSON if status is 201
+      } else {
+        throw new Error('Failed to create order'); // Throw error if not 201
+      }
     })
-    .then(response => response.json())
     .then(data => {
       console.log('Checkout Successful:', data);
       clearCart(); // Clear the cart after successful checkout
@@ -42,9 +58,9 @@ const Checkout = () => {
     .catch(error => {
       console.error('Checkout Error:', error);
     });
+  alert('Your order has been processed!');
+};
 
-    alert('Checkout Successful!');
-  };
 
   return (
 

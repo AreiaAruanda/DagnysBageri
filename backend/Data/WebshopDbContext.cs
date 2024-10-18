@@ -29,15 +29,6 @@ namespace backend.Data
                 .WithMany(c => c.Products)
                 .UsingEntity(j => j.ToTable("ProductCategories")); // Specify join table name
 
-            // Configure one-to-many relationship between OrderModel and OrderItemModel
-            builder.Entity<OrderModel>(entity =>
-            {
-                entity.HasMany(o => o.OrderItems)
-                    .WithOne(oi => oi.Order)
-                    .HasForeignKey(oi => oi.OrderId)
-                    .OnDelete(DeleteBehavior.Cascade); // Cascade delete OrderItems when an Order is deleted
-            });
-
             // Configure one-to-many relationship between OrderItemModel and ProductModel
             builder.Entity<OrderItemModel>(entity =>
             {

@@ -35,7 +35,7 @@ namespace backend.Models
         public decimal TotalAmount { get; set; }
 
         // List of items included in the order
-        public required List<OrderItemModel> OrderItems { get; set; }
+        public List<OrderItemModel>? OrderItems { get; set; }
 
         // Additional notes for the order, with a maximum length of 500 characters
         [MaxLength(500)]
