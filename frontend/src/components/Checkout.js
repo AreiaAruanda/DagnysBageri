@@ -58,7 +58,7 @@ const Checkout = () => {
     .catch(error => {
       console.error('Checkout Error:', error);
     });
-  alert('Checkout Successful!');
+  alert('Your order has been processed!');
 };
 
 
