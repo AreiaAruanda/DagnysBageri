@@ -13,5 +13,6 @@ namespace backend.Models
 
         // Navigation property for the associated product
         public ProductModel? Product { get; set; }
+
     }
 }
