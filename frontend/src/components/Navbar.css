@@ -47,3 +47,17 @@ nav a:hover {
 .cart-icon a:hover {
   color: #f97d63;
 }
+
+.logout-button {
+  background: none;
+  border: none;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  color: #f97d63;
+}

@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IIdentityService, IdentityService>();
 builder.Services.AddSingleton<IFileSystem, FileSystem>();
 
 // Adding JWT Key and checking if it is missing
@@ -50,7 +51,7 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(keyBytes)
     };
 });
@@ -65,7 +66,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-// Add controllers to the services container
 builder.Services.AddControllers();
 
 // Add Swagger/OpenAPI support
@@ -83,6 +83,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAllOrigins");
 
+app.UseAuthentication();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -95,6 +97,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     SeedData.SeedProductsAndCategories(services);
     SeedData.SeedUsers(services).Wait();
+    SeedData.SeedOrders(services).Wait();
     //SeedData.ClearDatabaseAsync(services).Wait(); // Uncomment to clear the database
 }
 

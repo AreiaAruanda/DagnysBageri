@@ -206,6 +206,71 @@ namespace backend.Data
             }
         }
 
+
+                // Method to seed initial orders into the database
+        public static async Task SeedOrders(IServiceProvider serviceProvider)
+        {
+            using (var context = new WebshopDbContext(
+                serviceProvider.GetRequiredService<DbContextOptions<WebshopDbContext>>()))
+            {
+                // Check if the database has already been seeded with orders
+                if (await context.Orders.AnyAsync())
+                {
+                    return; // DB has been seeded
+                }
+
+                // Retrieve products from the database
+                var products = await context.Products.ToListAsync();
+
+                // Create mock orders
+                var orders = new List<OrderModel>
+                {
+                    new OrderModel
+                    {
+                        FirstName = "John",
+                        LastName = "Doe",
+                        Email = "john.doe@example.com",
+                        Phone = "123-456-7890",
+                        PickupDate = DateTime.Now.AddDays(3).Date,
+                        OrderDate = DateTime.Now.AddDays(-12).Date,
+                        TotalAmount = 10.47M,
+                        OrderItems = new List<OrderItemModel>(
+                            new[]
+                            {
+                                new OrderItemModel { Product = products[0], Quantity = 1},
+                                new OrderItemModel { Product = products[1], Quantity = 2},
+                                new OrderItemModel { Product = products[2], Quantity = 3}
+                            }
+                        ),
+                        Notes = "Please deliver to the back door.",
+                        Status = "Pending"
+                    },
+                                       new OrderModel
+                    {
+                        FirstName = "Jane",
+                        LastName = "Smith",
+                        Email = "jane.smith@example.com",
+                        Phone = "987-654-3210",
+                        PickupDate = DateTime.Now.AddDays(5).Date,
+                        OrderDate = DateTime.Now.AddDays(-3).Date,
+                        TotalAmount = 6.48M,
+                        OrderItems = new List<OrderItemModel>(
+                            new[]
+                            {
+                                new OrderItemModel { Product = products[0], Quantity = 1},
+                                new OrderItemModel { Product = products[1], Quantity = 2}
+                            }),
+                        Notes = "Leave at the front desk.",
+                        Status = "Pending"
+                    }
+                };
+
+                // Add orders to the context
+                await context.Orders.AddRangeAsync(orders);
+                await context.SaveChangesAsync();
+            }
+        }
+
         // Method to seed initial users into the database
         public static async Task SeedUsers(IServiceProvider serviceProvider)
         {
