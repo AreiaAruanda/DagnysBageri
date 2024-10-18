@@ -12,12 +12,6 @@ namespace backend.Models
         public int ProductId { get; set; }
 
         // Navigation property for the associated product
-        public required ProductModel Product { get; set; }
-
-        // Foreign key referencing the OrderModel
-        public int OrderId { get; set; }
-
-        // Navigation property for the associated order
-        public required OrderModel Order { get; set; }
+        public ProductModel? Product { get; set; }
     }
 }

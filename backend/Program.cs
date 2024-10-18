@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using backend.Interfaces;
 using backend.Services;
 using System.IO.Abstractions;
-using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IIdentityService, IdentityService>();
 builder.Services.AddSingleton<IFileSystem, FileSystem>();
 
 // Adding JWT Key and checking if it is missing
@@ -67,11 +67,6 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
-
-// Add controllers to the services container
-builder.Services.AddControllers().AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson(options =>
-    options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 // Add Swagger/OpenAPI support
 builder.Services.AddEndpointsApiExplorer();

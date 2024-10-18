@@ -31,7 +31,7 @@ namespace backend.Controllers
         public async Task<IActionResult> GetOrders()
         {
             var orders = await _context.Orders
-                .Include(o => o.OrderItems)
+                .Include(o => o.OrderItems!)
                 .ThenInclude(oi => oi.Product)
                 .ToListAsync();
 

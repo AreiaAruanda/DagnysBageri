@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
 using backend.ViewModels;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using System.Text;
+using backend.Interfaces;
+
 
 namespace backend.Controllers
 {
@@ -14,58 +11,47 @@ namespace backend.Controllers
     public class IdentityController : ControllerBase
     {
         private readonly ILogger<IdentityController> _logger;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IConfiguration _configuration;
+        private readonly IIdentityService _identityService;
 
-        public IdentityController(IConfiguration configuration, ILogger<IdentityController> logger, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public IdentityController(ILogger<IdentityController> logger, IIdentityService identityService)
         {
             _logger = logger;
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _configuration = configuration;
+            _identityService = identityService;
         }
 
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Username);
-            if(user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            try 
             {
-                var token = GenerateJwtToken(user);
-                return await Task.FromResult(Ok(new { token }));
+                var token = await _identityService.LoginAsync(model.Username, model.Password);
+                if (token != null)
+                {
+                    return Ok(new { token });
+                }
+                return Unauthorized(new { message = "Invalid username or password" });
             }
-
-            return await Task.FromResult(Unauthorized());
-        }
-
-        private string GenerateJwtToken(IdentityUser user)
-        {
-            var claims = new[]
+            catch (Exception e)
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+                _logger.LogError(e, "Error logging in");
+                return StatusCode(500, new { message = "An error occurred while logging in" });
+            }
         }
         
         [HttpDelete]
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
-            return await Task.FromResult(Ok("Logged out"));
+            try
+            {
+                await _identityService.LogoutAsync();
+                return Ok(new { message = "Logged out" });
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error logging out");
+                return StatusCode(500, new { message = "An error occurred while logging out" });
+            }
         }
         
     }

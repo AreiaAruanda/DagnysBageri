@@ -234,7 +234,14 @@ namespace backend.Data
                         PickupDate = DateTime.Now.AddDays(3),
                         OrderDate = DateTime.Now,
                         TotalAmount = 10.47M,
-                        OrderItems = new List<OrderItemModel>(),
+                        OrderItems = new List<OrderItemModel>(
+                            new[]
+                            {
+                                new OrderItemModel { Product = products[0], Quantity = 1},
+                                new OrderItemModel { Product = products[1], Quantity = 2},
+                                new OrderItemModel { Product = products[2], Quantity = 3}
+                            }
+                        ),
                         Notes = "Please deliver to the back door.",
                         Status = "Pending"
                     },
@@ -247,24 +254,16 @@ namespace backend.Data
                         PickupDate = DateTime.Now.AddDays(5),
                         OrderDate = DateTime.Now,
                         TotalAmount = 6.48M,
-                        OrderItems = new List<OrderItemModel>(),
+                        OrderItems = new List<OrderItemModel>(
+                            new[]
+                            {
+                                new OrderItemModel { Product = products[0], Quantity = 1},
+                                new OrderItemModel { Product = products[1], Quantity = 2}
+                            }),
                         Notes = "Leave at the front desk.",
                         Status = "Pending"
                     }
                 };
-
-                // Create order items and assign them to orders
-                var orderItems = new List<OrderItemModel>
-                {
-                    new OrderItemModel { Product = products[0], Quantity = 1, Order = orders[0] },
-                    new OrderItemModel { Product = products[1], Quantity = 2, Order = orders[0] },
-                    new OrderItemModel { Product = products[2], Quantity = 3, Order = orders[1] },
-                    new OrderItemModel { Product = products[3], Quantity = 1, Order = orders[1] }
-                };
-
-                // Assign order items to their respective orders
-                orders[0].OrderItems.AddRange(orderItems.Where(oi => oi.Order == orders[0]));
-                orders[1].OrderItems.AddRange(orderItems.Where(oi => oi.Order == orders[1]));
 
                 // Add orders to the context
                 await context.Orders.AddRangeAsync(orders);

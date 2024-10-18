@@ -23,8 +23,8 @@ namespace backend.Tests.Services
         {
             var categories = new List<CategoryModel>
             {
-                new CategoryModel { Id = 1, Name = "Category 1", Products = new List<ProductModel>() },
-                new CategoryModel { Id = 2, Name = "Category 2", Products = new List<ProductModel>() }
+                new CategoryModel { Id = 1, Name = "Category 1", Products = new List<ProductModel>(), CategoryURL = "category1" },
+                new CategoryModel { Id = 2, Name = "Category 2", Products = new List<ProductModel>(), CategoryURL = "category2" }
             };
 
             var products = new List<ProductModel>
