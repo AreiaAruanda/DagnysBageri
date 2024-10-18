@@ -50,7 +50,7 @@ const Checkout = () => {
 
     <div className="background">
       <div className="checkout-container">
-        <h2>Checkout</h2>
+        <h3>Cart</h3>
 
         <div className="cart-summary">
           <Cart />
@@ -87,7 +87,7 @@ const Checkout = () => {
               <label>Notes</label>
               <textarea name="notes" className='textarea' value={customerInfo.notes} onChange={handleInputChange} maxLength="500" />
             </div>
-            <button type="submit" className="checkout-button">Complete Checkout</button>
+            <button type="submit" className="button">COMPLETE CHECKOUT</button>
           </form>
         </div>
       </div>

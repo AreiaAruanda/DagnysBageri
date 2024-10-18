@@ -26,7 +26,7 @@ const Home = () => {
                             <a href="/products/warm-drinks-coffee">WARM DRINKS & COFFEE</a>
                             <a href="/products/hearty-sandwiches">HEARTY SANDWICHES</a>
                         </div>
-                        <a href="/" className="cookie-button">
+                        <a href="/products" className="cookie-button">
                             <img 
                                 src={cardImage} 
                                 alt="Go to our webshop" 
