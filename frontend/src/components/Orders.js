@@ -68,20 +68,20 @@ const Orders = () => {
                 </thead>
                 <tbody>
                     {orders.map(order => (
-                        <tr key={order.id}>
-                            <td>{order.id}</td>
-                            <td>{order.firstName} {order.lastName}</td>
-                            <td>{order.email}</td>
-                            <td>{order.phone}</td>
-                            <td>{new Date(order.orderDate).toLocaleDateString()}</td>
-                            <td>{new Date(order.pickupDate).toLocaleDateString()}</td>
-                            <td>{order.totalAmount}</td>
-                            <td>{order.status}</td>
+                        <tr key={order.Id}>
+                            <td>{order.Id}</td>
+                            <td>{order.FirstName} {order.lastName}</td>
+                            <td>{order.Email}</td>
+                            <td>{order.Phone}</td>
+                            <td>{new Date(order.OrderDate).toLocaleDateString()}</td>
+                            <td>{new Date(order.PickupDate).toLocaleDateString()}</td>
+                            <td>{order.TotalAmount}</td>
+                            <td>{order.Status}</td>
                             <td>
                                 <ul>
-                                    {order.orderItems.map(item => (
-                                        <li key={item.id}>
-                                            {item.product.name} (x{item.quantity})
+                                    {order.OrderItems.map(item => (
+                                        <li key={item.Id}>
+                                            {item.Product.Name} (x{item.Quantity})
                                         </li>
                                     ))}
                                 </ul>

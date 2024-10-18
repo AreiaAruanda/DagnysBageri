@@ -19,7 +19,7 @@ namespace backend.Controllers
         {
             _context = context;
         }
-
+                                 
         [HttpPost]
         public async Task<IActionResult> CreateOrder()
         {
@@ -40,37 +40,7 @@ namespace backend.Controllers
                 return NotFound();
             }
 
-            // Transform the data into ViewModels 
-            var orderViewModels = orders.Select(order => new OrderViewModel 
-            {
-                Id = order.Id,
-                FirstName = order.FirstName,
-                LastName = order.LastName,
-                Email = order.Email,
-                Phone = order.Phone,
-                PickupDate = order.PickupDate,
-                OrderDate = order.OrderDate,
-                TotalAmount = order.TotalAmount,
-                Notes = order.Notes,
-                Status = order.Status!,
-                OrderItems = order.OrderItems.Select(item => new OrderItemViewModel
-                {
-                    Id = item.Id,
-                    Quantity = item.Quantity,
-                    ProductId = item.ProductId,
-                    Product = new ProductViewModel
-                    {
-                        Id = item.Product.Id,
-                        Name = item.Product.Name,
-                        Description = item.Product.Description,
-                        Price = item.Product.Price,
-                        FilterTags = item.Product.FilterTags,
-                        Ingredients = item.Product.Ingredients,
-                    }
-                }).ToList()
-            }).ToList();
-
-            return Ok(orderViewModels);
+            return Ok(orders);
         }
     }
 }

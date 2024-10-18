@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using backend.Interfaces;
 using backend.Services;
 using System.IO.Abstractions;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,12 +66,12 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddControllers();
+
 // Add controllers to the services container
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-    });
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson(options =>
+    options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 // Add Swagger/OpenAPI support
 builder.Services.AddEndpointsApiExplorer();
