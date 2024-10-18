@@ -42,7 +42,7 @@ const Login = () => {
             login(data.token);
 
             // Navigate to the home page
-            navigate('/');
+            navigate('/orders');
         } catch (error) {
             // Handle error response
             console.error('Login failed:', error);

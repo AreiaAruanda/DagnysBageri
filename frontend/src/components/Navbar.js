@@ -35,11 +35,13 @@ const Navbar = () => {
         </li>
       )}
       </ul>
+      {!isLoggedIn && (
       <div className="cart-icon">
         <Link to="/cart">
           <i className="fas fa-shopping-bag"></i> {/* Font Awesome Bag Icon */}
         </Link>
       </div>
+      )}
     </nav>
   );
 };

@@ -231,8 +231,8 @@ namespace backend.Data
                         LastName = "Doe",
                         Email = "john.doe@example.com",
                         Phone = "123-456-7890",
-                        PickupDate = DateTime.Now.AddDays(3),
-                        OrderDate = DateTime.Now,
+                        PickupDate = DateTime.Now.AddDays(3).Date,
+                        OrderDate = DateTime.Now.AddDays(-12).Date,
                         TotalAmount = 10.47M,
                         OrderItems = new List<OrderItemModel>(
                             new[]
@@ -251,8 +251,8 @@ namespace backend.Data
                         LastName = "Smith",
                         Email = "jane.smith@example.com",
                         Phone = "987-654-3210",
-                        PickupDate = DateTime.Now.AddDays(5),
-                        OrderDate = DateTime.Now,
+                        PickupDate = DateTime.Now.AddDays(5).Date,
+                        OrderDate = DateTime.Now.AddDays(-3).Date,
                         TotalAmount = 6.48M,
                         OrderItems = new List<OrderItemModel>(
                             new[]

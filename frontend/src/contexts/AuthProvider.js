@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from './AuthContext';
 
@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
     setIsLoggedIn(true);
   };
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       // Retrieve the JWT token from local storage
       const token = localStorage.getItem('token');
@@ -67,9 +67,9 @@ const AuthProvider = ({ children }) => {
       setIsLoggedIn(false);
       navigate('/');
     }
-  };
+  }, [navigate]);
 
-  const refreshToken = async () => {
+  const refreshToken = useCallback(async () => {
     try {
       const refreshToken = localStorage.getItem('refreshToken');
       if (!refreshToken) {
@@ -96,14 +96,14 @@ const AuthProvider = ({ children }) => {
       console.error('Error refreshing token:', error);
       logout();
     }
-  };
+  }, [logout]);
 
-  const clearLocalStorageAndLogout = () => {
+  const clearLocalStorageAndLogout = useCallback(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
     setIsLoggedIn(false);
     navigate('/');
-  };
+  }, [navigate]);
 
   const authContextValue = useMemo(() => ({
     isLoggedIn,
@@ -111,7 +111,7 @@ const AuthProvider = ({ children }) => {
     logout,
     refreshToken,
     clearLocalStorageAndLogout
-  }), [isLoggedIn, logout, refreshToken]);
+  }), [isLoggedIn, logout, refreshToken, clearLocalStorageAndLogout]);
 
   return (
     <AuthContext.Provider value={authContextValue}>

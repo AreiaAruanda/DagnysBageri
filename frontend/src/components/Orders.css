@@ -5,7 +5,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
     width: 85% !important;
     height: fit-content;
-    margin-top: 20px;
     display: flex !important;
     gap: 10px;
     flex-direction: column; /* Arrange children vertically */
@@ -17,7 +16,6 @@
 
 .order-summary {
     cursor: pointer;
-    padding: 10px;
     border-bottom: 1px solid #ddd;
     width: 100%;
     text-align: left;
@@ -29,6 +27,7 @@
     border-top: 1px solid #ddd;
     width: 100%;
     text-align: left;
+    padding-left: 20px;
 }
 
 .order-summary:hover {
@@ -37,4 +36,13 @@
 
 .order-expanded .order-details {
     display: block;
+}
+
+.card-body {
+    box-sizing: border-box;
+}
+
+.order-card-wrapper {
+    width: 95%;
+    margin: 0 auto;
 }

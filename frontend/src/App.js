@@ -12,6 +12,7 @@ import Login from './components/Login'; // Import the Login component
 import Logout from './components/Logout'; // Import the Logout component
 import Orders from './components/Orders';
 import AuthProvider from './contexts/AuthProvider'; // Import the AuthProvider component
+import { OrderProvider } from './contexts/OrderContext';
 
 // Main App component
 function App() {
@@ -19,6 +20,7 @@ function App() {
     // Router component to enable routing in the application
     <Router>
       <AuthProvider>
+        <OrderProvider>
         <CartProvider>
           <div className="App">
             {/* Routes component to define the different routes in the application */}
@@ -34,6 +36,7 @@ function App() {
             </Routes>
           </div>
         </CartProvider>
+        </OrderProvider>
       </AuthProvider>
     </Router>
   );
