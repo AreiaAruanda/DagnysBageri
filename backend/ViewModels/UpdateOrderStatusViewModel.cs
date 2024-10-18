@@ -1,5 +1,5 @@
 namespace backend.ViewModels;
 public class UpdateOrderStatusViewModel
 {
-    public string Status { get; set; }
+    public required string Status { get; set; }
 }

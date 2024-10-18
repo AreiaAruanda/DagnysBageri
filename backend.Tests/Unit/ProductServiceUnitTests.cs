@@ -26,18 +26,6 @@ namespace backend.Tests.Unit
             using (var context = TestDbContextHelper.CreateInMemoryDbContext())
             {
                 // Arrange
-                var product = new ProductModel
-                {
-                    Id = 1,
-                    Name = "Product 1",
-                    Description = "description1",
-                    Price = 1.99M,
-                    FilterTags = new List<string> { "tag1", "tag2" },
-                    Ingredients = new List<string> { "ingredient1", "ingredient2" },
-                    Categories = new List<CategoryModel> { new CategoryModel { Id = 1, Name = "Category 1", Products = new List<ProductModel>() } },
-                    ImagePath = "path1"
-                };
-
                 _imageServiceMock.Setup(i => i.GetThumbnailPath(It.IsAny<string>())).Returns("thumbnailPath");
                 _imageServiceMock.Setup(i => i.GetBase64String(It.IsAny<string>())).Returns("base64String");
 
@@ -47,6 +35,10 @@ namespace backend.Tests.Unit
                 MethodInfo methodInfo = typeof(ProductService).GetMethod("CreateProductViewModel", BindingFlags.NonPublic | BindingFlags.Instance)!;
                 Assert.NotNull(methodInfo);
 
+                var product = context.Products.First();
+
+                // Convert List<CategoryModel> to List<CategoryViewModel>
+                var categoryViewModels = product.Categories.Select(c => new CategoryViewModel { Id = c.Id, Name = c.Name, CategoryURL = c.CategoryURL }).ToList();
                 // Act
                 var result = (ProductViewModel)methodInfo.Invoke(productService, new object[] { product })!;
 
@@ -60,7 +52,7 @@ namespace backend.Tests.Unit
                 Assert.Equal(product.FilterTags, result.FilterTags);
                 Assert.Equal(product.Ingredients, result.Ingredients);
                 Assert.Equal("base64String", result.Thumbnail);
-                Assert.Equal(product.Categories.Select(c => c.Name).ToList(), result.Categories);
+                Assert.Equal(categoryViewModels, result.Categories);
             }
         }
 

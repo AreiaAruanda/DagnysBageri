@@ -19,7 +19,7 @@ public class IdentityService : IIdentityService
         _signInManager = signInManager;
     }
 
-    public async Task<string> LoginAsync(string username, string password)
+    public async Task<string?> LoginAsync(string username, string password)
     {
         var user = await _userManager.FindByEmailAsync(username);
         if (user != null && await _userManager.CheckPasswordAsync(user, password))
@@ -38,12 +38,17 @@ public class IdentityService : IIdentityService
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Email!),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var key = _configuration["Jwt:Key"];
+        if( string.IsNullOrEmpty(key) )
+        {
+            throw new InvalidOperationException("Jwt:Key is missing in configuration");
+        }
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+        var creds = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
             issuer: _configuration["Jwt:Issuer"],

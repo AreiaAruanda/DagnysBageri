@@ -33,7 +33,7 @@ namespace backend.Tests.Unit
                     Price = 19.99M,
                     FilterTags = new List<string> { "tag1", "tag2" },
                     Ingredients = new List<string> { "ingredient1", "ingredient2" },
-                    Categories = new List<string> { "category1", "category2" },
+                    Categories = new List<CategoryViewModel> { new CategoryViewModel { Id = 1, Name = "Category Name", CategoryURL = "CategoryName" } },
                     Thumbnail = fakeBase64WebPImage,
                 }
             };

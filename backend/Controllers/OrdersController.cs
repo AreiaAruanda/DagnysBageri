@@ -40,10 +40,12 @@ public class OrdersController : ControllerBase
         }
         catch (DbUpdateException ex)
         {
+            Console.WriteLine(ex.Message);
             return new JsonResult(new { error = "Failed to create order" }) { StatusCode = 500 };
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             return new JsonResult(new { error = "Unexpected error occurred" }) { StatusCode = 500 };
         }
     }
