@@ -10,6 +10,7 @@ import Checkout from './components/Checkout';
 import Products from './components/Products'; // Import the Products component
 import Login from './components/Login'; // Import the Login component
 import Logout from './components/Logout'; // Import the Logout component
+import Orders from './components/Orders';
 
 // Main App component
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/products/:category?" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Checkout/>} />
+          <Route path="/orders" element={<Orders/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/logout" element={<Logout/>} />
         </Routes>

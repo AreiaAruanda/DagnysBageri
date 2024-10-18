@@ -66,7 +66,11 @@ builder.Services.AddCors(options =>
 });
 
 // Add controllers to the services container
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+    });
 
 // Add Swagger/OpenAPI support
 builder.Services.AddEndpointsApiExplorer();
@@ -97,6 +101,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     SeedData.SeedProductsAndCategories(services);
     SeedData.SeedUsers(services).Wait();
+    SeedData.SeedOrders(services).Wait();
     //SeedData.ClearDatabaseAsync(services).Wait(); // Uncomment to clear the database
 }
 
