@@ -1,8 +1,6 @@
-
-
 .background {
     min-height: 100vh; /* Full viewport height */
-    padding-top: 80px; /* Adjust this value to set the desired distance from the top */
+    padding-top: 80px; 
     display: flex; /* Flexbox for centering content */
     align-items: flex-start; /* Align items to the start */
     justify-content: center; /* Center horizontally */
@@ -57,20 +55,6 @@
     object-fit: cover; /* Cover the entire area */
 }
 
-.button {
-    background-color: #08466b;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 0;
-}
-
-.button:hover {
-    background-color: #08466b;
-}
-
 .title {
     padding-bottom: 10px;
     padding-top: 15px; 
@@ -92,43 +76,60 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background: rgba(0, 0, 0, 0.5); 
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000; /* Ensure it overlays other content */
+    z-index: 1000; 
 }
 
 .popup-content {
-    position: relative; /* Add relative positioning to contain the absolutely positioned close button */
+    position: relative; 
     background: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 400px; /* Set a maximum width for the popup */
+    max-width: 400px; 
     width: 100%;
 }
 
 .close {
     cursor: pointer;
     font-size: 20px;
-    position: absolute; /* Position it absolutely within the container */
-    top: 10px; /* Add some space from the top */
-    right: 10px; /* Align it to the right */
-    color: #333; /* Optional: Set the color for visibility */
+    position: absolute; 
+    top: 10px; 
+    right: 20px; 
+    color: #000000;
 }
 
 .filter-category {
     margin-bottom: 20px; /* Spacing between categories */
 }
 
+.filter-name{
+    font-family: 'Montserrat', sans-serif;
+    color: black; 
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.filter-name:hover{
+    font-family: 'Montserrat', sans-serif;
+    color: #f97d63;
+}
+
 .filter-text {
     font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+}
+
+.filter-text:hover {
+    color: #f97d63;
 }
 
 h5 {
-    cursor: pointer; /* Indicate clickable headings */
-    margin: 10px 0; /* Spacing above and below category titles */
+    cursor: pointer; 
+    margin: 10px 0; 
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -138,7 +139,7 @@ h3 {
 }
 
 .filter-options {
-    padding-left: 20px; /* Indent the options for better readability */
+    padding-left: 20px; 
     display: none; /* Hidden by default, only shown when expanded */
 }
 

@@ -32,18 +32,6 @@
     border-radius: 4px;
 }
 
-.checkout-button {
-    background-color: #08466b;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.checkout-button:hover {
-    background-color: #08466b;
-}
 
 .textarea {
   width: 100%;  /* Make the textarea take up full width */

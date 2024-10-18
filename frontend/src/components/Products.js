@@ -94,11 +94,11 @@ const Products = () => {
                         <div className="popup-content">
                             <span className="close" onClick={toggleFilterPopup}>&times;</span>
 
-                            <h3>FILTER BY</h3>
+                            <h3>Filter by</h3>
 
                             {/* Category Filters */}
                             <div className="filter-category">
-                                <h5 onClick={() => toggleOptions('category-options')}>Category</h5>
+                                <div className="filter-name" onClick={() => toggleOptions('category-options')}>Category</div>
                                 <div className="filter-options" style={{ display: expandedOption === 'category-options' ? 'block' : 'none' }}>
                                     <label><input type="checkbox" name="category" value="classic-breads" /> Classic Breads</label><br />
                                     <label><input type="checkbox" name="category" value="grandmas-pastries" /> Grandma’s Pastries</label><br />
@@ -110,7 +110,7 @@ const Products = () => {
 
                             {/* Flavour Filters */}
                             <div className="filter-category">
-                                <h5 onClick={() => toggleOptions('flavour-options')}>Flavour</h5>
+                                <div className="filter-name" onClick={() => toggleOptions('flavour-options')}>Flavour</div>
                                 <div className="filter-options" style={{ display: expandedOption === 'flavour-options' ? 'block' : 'none' }}>
                                     <label><input type="checkbox" name="flavour" value="chocolate" /> Chocolate</label><br />
                                     <label><input type="checkbox" name="flavour" value="vanilla" /> Vanilla</label><br />
@@ -122,7 +122,7 @@ const Products = () => {
 
                             {/* Dietary Restrictions Filters */}
                             <div className="filter-category">
-                                <h5 onClick={() => toggleOptions('dietary-options')}>Dietary Restrictions</h5>
+                                 <div className="filter-name" onClick={() => toggleOptions('dietary-options')}>Dietary Restrictions</div>
                                 <div className="filter-options" style={{ display: expandedOption === 'dietary-options' ? 'block' : 'none' }}>
                                     <label><input type="checkbox" name="dietary" value="gluten-free" /> Gluten-Free</label><br />
                                     <label><input type="checkbox" name="dietary" value="vegan" /> Vegan</label><br />
@@ -134,12 +134,12 @@ const Products = () => {
 
                             {/* Occasion Filters */}
                             <div className="filter-category">
-                                <h5 onClick={() => toggleOptions('occasion-options')}>Occasion</h5>
+                                <div className="filter-name" onClick={() => toggleOptions('occasion-options')}>Occasion</div>
                                 <div className="filter-options" style={{ display: expandedOption === 'occasion-options' ? 'block' : 'none' }}>
                                     <label><input type="checkbox" name="occasion" value="breakfast" /> Breakfast</label><br />
                                     <label><input type="checkbox" name="occasion" value="fika" /> Fika</label><br />
                                     <label><input type="checkbox" name="occasion" value="birthday" /> Birthday</label><br />
-                                    <label><input type="checkbox" name="occasion" value="wedding" /> Wedding</label><br />
+                                    <label><input type="checkbox" name="occasion" value="wedding" /> Wedding</label>
                                     <label><input type="checkbox" name="occasion" value="lucia" /> Lucia</label>
                                 </div>
                             </div>
@@ -164,7 +164,7 @@ const Products = () => {
                                             <h5 className="card-title">{product.name}</h5>
                                             <p className="card-text">{product.description}</p>
                                             <p id="price" className="card-text">Price: ${product.price}</p>
-                                            <button className="button" onClick={() => addToCart(product)}>Add to Cart</button>
+                                            <button className="button" onClick={() => addToCart(product)}>ADD TO CART</button>
                                         </div>
                                     </div>
                                 </div>

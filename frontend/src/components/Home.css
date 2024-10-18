@@ -14,37 +14,6 @@
     overflow: hidden;
 }
 
-.cookie-button {
-    position: relative;
-    display: inline-block;
-    text-align: center;
-    width: 150px; 
-    transition: transform 0.3s ease;
-}
-
-.cookie-button:hover {
-    transform: scale(1.07); /* Scale up the button by 10% on hover */
-}
-
-.cookie {
-    width: 100%; /* Image will inherit width from .cookie-button */
-    height: auto;
-    display: block; /* Ensure image doesn’t have any space around it */
-}
-
-.button-text {
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-    z-index: 1; /* Ensure text appears above the image */
-    padding: 5px 10px; /* Padding to make the text more button-like */
-}
-
 .category-links {
     padding: 20px 20px; /* Adjusted padding to bring the rows closer */
     text-align: center;
