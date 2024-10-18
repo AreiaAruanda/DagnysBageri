@@ -1,98 +1,205 @@
-import React, { useEffect, useState } from 'react'; // Import React, useEffect, and useState
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import React, { useState, useEffect, useContext, useRef } from 'react';
+import AuthContext from '../contexts/AuthContext'; // Correct import path
+import './Orders.css';
 
-// Define the Orders component
 const Orders = () => {
-    // State variable to store orders
     const [orders, setOrders] = useState([]);
+    const [expandedOrderId, setExpandedOrderId] = useState(null);
+    const { logout, refreshToken, clearLocalStorageAndLogout } = useContext(AuthContext);
+    const expandedOrderRef = useRef(null);
 
-    // Function to fetch orders
     const fetchOrders = async () => {
         try {
-            // Retrieve the JWT token from local storage
-            const token = localStorage.getItem('jwtToken');
-
-            // Check if the token exists
+            const token = localStorage.getItem('token');
+            console.log('Retrieved token for fetching orders:', token);
             if (!token) {
                 throw new Error('No token found');
             }
 
-            // Send a GET request to the orders endpoint using fetch
             const response = await fetch('http://localhost:5032/api/v1/orders', {
-                method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}` // Include the token in the Authorization header
+                    'Authorization': `Bearer ${token}`
                 }
             });
 
-            // Check if the response is successful
-            if (!response.ok) {
+            if (response.status === 401) {
+                // Token is expired or invalid, try to refresh it
+                try {
+                    await refreshToken();
+                    const newToken = localStorage.getItem('token');
+                    const retryResponse = await fetch('http://localhost:5032/api/v1/orders', {
+                        headers: {
+                            'Authorization': `Bearer ${newToken}`
+                        }
+                    });
+                    if (!retryResponse.ok) {
+                        throw new Error('Failed to fetch orders after token refresh');
+                    }
+                    const data = await retryResponse.json();
+                    setOrders(data);
+                } catch (refreshError) {
+                    console.error('Error refreshing token:', refreshError);
+                    clearLocalStorageAndLogout();
+                }
+            } else if (!response.ok) {
                 throw new Error('Failed to fetch orders');
+            } else {
+                const data = await response.json();
+                setOrders(data);
             }
-
-            // Parse the JSON response
-            const data = await response.json();
-
-            // Update the orders state
-            setOrders(data);
         } catch (error) {
-            // Handle error response
             console.error('Error fetching orders:', error);
+            clearLocalStorageAndLogout();
         }
     };
 
-    // Use useEffect to fetch orders on component mount
+    const updateOrderStatus = async (orderId, newStatus) => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('No token found');
+            }
+
+            const response = await fetch(`http://localhost:5032/api/v1/orders/${orderId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ status: newStatus })
+            });
+
+            if (response.status === 401) {
+                // Token is expired or invalid, try to refresh it
+                try {
+                    await refreshToken();
+                    const newToken = localStorage.getItem('token');
+                    const retryResponse = await fetch(`http://localhost:5032/api/v1/orders/${orderId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${newToken}`
+                        },
+                        body: JSON.stringify({ status: newStatus })
+                    });
+                    if (!retryResponse.ok) {
+                        throw new Error('Failed to update order status after token refresh');
+                    }
+                    // Update the order status locally
+                    setOrders(orders.map(order => 
+                        order.id === orderId ? { ...order, status: newStatus } : order
+                    ));
+                } catch (refreshError) {
+                    console.error('Error refreshing token:', refreshError);
+                    clearLocalStorageAndLogout();
+                }
+            } else if (!response.ok) {
+                throw new Error('Failed to update order status');
+            } else {
+                // Update the order status locally
+                setOrders(orders.map(order => 
+                    order.id === orderId ? { ...order, status: newStatus } : order
+                ));
+            }
+        } catch (error) {
+            console.error('Error updating order status:', error);
+            clearLocalStorageAndLogout();
+        }
+    };
+
     useEffect(() => {
         fetchOrders();
     }, []);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (expandedOrderRef.current && !expandedOrderRef.current.contains(event.target)) {
+                setExpandedOrderId(null);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [expandedOrderId]);
+
+    const toggleOrderDetails = (orderId) => {
+        setExpandedOrderId(expandedOrderId === orderId ? null : orderId);
+    };
+
     return (
-        // Container div with Bootstrap class
-        <div className="container mt-5">
-            <h2 className="text-center">Orders</h2>
-            {/* Table to display orders */}
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Customer Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Order Date</th>
-                        <th>Pickup Date</th>
-                        <th>Total Amount</th>
-                        <th>Status</th>
-                        <th>Items</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div className="background">
+            <div className="orders-container">
+                <h2 className="text-center">Orders</h2>
+                <div className="row">
                     {orders.map(order => (
-                        <tr key={order.id}>
-                            <td>{order.id}</td>
-                            <td>{order.firstName} {order.lastName}</td>
-                            <td>{order.email}</td>
-                            <td>{order.phone}</td>
-                            <td>{new Date(order.orderDate).toLocaleDateString()}</td>
-                            <td>{new Date(order.pickupDate).toLocaleDateString()}</td>
-                            <td>{order.totalAmount}</td>
-                            <td>{order.status}</td>
-                            <td>
-                                <ul>
-                                    {order.orderItems.map(item => (
-                                        <li key={item.id}>
-                                            {item.product.name} (x{item.quantity})
-                                        </li>
-                                    ))}
-                                </ul>
-                            </td>
-                        </tr>
+                        <div key={order.id} className="col-md-6 col-lg-4 mb-4">
+                            <button
+                                className={`card order-summary ${expandedOrderId === order.id ? 'order-expanded' : ''}`}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleOrderDetails(order.id);
+                                }}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                        toggleOrderDetails(order.id);
+                                    }
+                                }}
+                                aria-expanded={expandedOrderId === order.id}
+                                ref={expandedOrderId === order.id ? expandedOrderRef : null}
+                            >
+                                <div className="card-body">
+                                    <h5 className="card-title">Order ID: {order.id}</h5>
+                                    <p className="card-text"><strong>Customer Name:</strong> {order.customerName}</p>
+                                    <p className="card-text"><strong>Order Date:</strong> {order.orderDate}</p>
+                                    <p className="card-text"><strong>Status:</strong> {order.status}</p>
+                                    {expandedOrderId === order.id && (
+                                        <div className="order-details">
+                                            <p className="card-text"><strong>Email:</strong> {order.email}</p>
+                                            <p className="card-text"><strong>Phone:</strong> {order.phone}</p>
+                                            <p className="card-text"><strong>Pickup Date:</strong> {order.pickupDate}</p>
+                                            <p className="card-text"><strong>Total Amount:</strong> {order.totalAmount}</p>
+                                            <p className="card-text"><strong>Products:</strong></p>
+                                            <ul>
+                                                {Object.entries(order.orderItems.reduce((acc, item) => {
+                                                    if (acc[item.product.name]) {
+                                                        acc[item.product.name] += item.quantity;
+                                                    } else {
+                                                        acc[item.product.name] = item.quantity;
+                                                    }
+                                                    return acc;
+                                                }, {})).map(([name, quantity]) => (
+                                                    <li key={name}>
+                                                        {name} - Quantity: {quantity}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                            <div className="form-group">
+                                                <label htmlFor={`status-${order.id}`}><strong>Update Status:</strong></label>
+                                                <select
+                                                    id={`status-${order.id}`}
+                                                    className="form-control"
+                                                    value={order.status}
+                                                    onChange={(e) => updateOrderStatus(order.id, e.target.value)}
+                                                    onClick={(e) => e.stopPropagation()} // Prevent collapse on select click
+                                                >
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Accepted">Accepted</option>
+                                                    <option value="Ready for pick up">Ready for pick up</option>
+                                                    <option value="Delivered">Delivered</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </button>
+                        </div>
                     ))}
-                </tbody>
-            </table>
+                </div>
+            </div>
         </div>
     );
 };
 
-// Export the Orders component as the default export
 export default Orders;

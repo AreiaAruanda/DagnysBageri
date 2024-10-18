@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using backend.ViewModels;
 using System.Linq;
 using System.Threading.Tasks;
 using backend.Data;
 using backend.Models;
-using backend.ViewModels;
 
 namespace backend.Controllers
 {
@@ -41,6 +41,24 @@ namespace backend.Controllers
             }
 
             return Ok(orders);
+        }
+
+
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateOrderStatus([FromRoute] int id, [FromBody] UpdateOrderStatusViewModel request )
+        {
+            var order = await _context.Orders.FindAsync(id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            order.Status = request.Status;
+            await _context.SaveChangesAsync();
+
+            return Ok(order);
         }
     }
 }

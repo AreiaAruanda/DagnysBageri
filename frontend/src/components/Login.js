@@ -1,6 +1,8 @@
-import React, { useState } from 'react'; // Import React and useState hook
+import React, { useState, useContext } from 'react'; // Import React, useState, and useContext hooks
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import AuthContext from '../contexts/AuthContext'; // Import AuthContext
+import logo from '../assets/logo_circle.png'; // Import logo image
 
 // Define the Login component
 const Login = () => {
@@ -10,6 +12,9 @@ const Login = () => {
 
     // Initialize navigate function
     const navigate = useNavigate();
+
+    // Access login function from AuthContext
+    const { login } = useContext(AuthContext);
 
     // Function to handle form submission
     const handleSubmit = async (event) => {
@@ -33,11 +38,8 @@ const Login = () => {
             // Parse the JSON response
             const data = await response.json();
 
-            // Store the JWT token in local storage
-            localStorage.setItem('jwtToken', data.token);
-
-            // Handle successful response
-            console.log('Login successful:', data);
+            // Call the login function from AuthContext with the token
+            login(data.token);
 
             // Navigate to the home page
             navigate('/');
@@ -48,42 +50,44 @@ const Login = () => {
     };
 
     return (
-        // Container div with Bootstrap class
-        <div className="container mt-5">
-            <div className="row justify-content-center">
-                <div className="col-md-6">
-                    {/* Card component for the login form */}
-                    <div className="card">
-                        <div className="card-body">
-                            <h3 className="card-title text-center">Login</h3>
-                            {/* Form component */}
+        <div className="background">
+            <div className="container">
+                <div className="row">
+                    {/* Centered column for the content */}
+                    <div className="col-12">
+                        {/* LOGO */}
+                        <a href="/" className="logo">
+                            <img
+                                src={logo}
+                                alt="Mormor Dagny's Bageri"
+                            />
+                        </a>
+                        <div className="login-form mt-5">
+                            <h2 className="login-title mb-4">Login</h2>
                             <form onSubmit={handleSubmit}>
-                                {/* Username input field */}
                                 <div className="form-group">
-                                    <label htmlFor="username">Username</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         id="username"
+                                        placeholder="Username"
+                                        aria-label="Username"
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
-                                        required
                                     />
                                 </div>
-                                {/* Password input field */}
                                 <div className="form-group">
-                                    <label htmlFor="password">Password</label>
                                     <input
                                         type="password"
                                         className="form-control"
                                         id="password"
+                                        placeholder="Password"
+                                        aria-label="Password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        required
                                     />
                                 </div>
-                                {/* Submit button */}
-                                <button type="submit" className="btn btn-primary btn-block mt-3">Login</button>
+                                <button type="submit" className="button">Login</button>
                             </form>
                         </div>
                     </div>
@@ -93,5 +97,4 @@ const Login = () => {
     );
 };
 
-// Export the Login component as the default export
 export default Login;
