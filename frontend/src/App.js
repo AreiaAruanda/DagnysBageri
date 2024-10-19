@@ -8,24 +8,36 @@ import Navbar from './components/Navbar'; // Import the Navbar component
 import Contact from './components/Contact'; // Import the Contact component
 import Checkout from './components/Checkout';
 import Products from './components/Products'; // Import the Products component
+import Login from './components/Login'; // Import the Login component
+import Logout from './components/Logout'; // Import the Logout component
+import Orders from './components/Orders';
+import AuthProvider from './contexts/AuthProvider'; // Import the AuthProvider component
+import { OrderProvider } from './contexts/OrderContext';
 
 // Main App component
 function App() {
   return (
     // Router component to enable routing in the application
     <Router>
-    <CartProvider>
-      <div className="App">
-        {/* Routes component to define the different routes in the application */}
-        <Navbar/>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/products/:category?" element={<Products />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/cart" element={<Checkout/>} />
-        </Routes>
-      </div>
-    </CartProvider>
+      <AuthProvider>
+        <OrderProvider>
+        <CartProvider>
+          <div className="App">
+            {/* Routes component to define the different routes in the application */}
+            <Navbar />
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route path="/products/:category?" element={<Products />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/cart" element={<Checkout />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/logout" element={<Logout />} />
+            </Routes>
+          </div>
+        </CartProvider>
+        </OrderProvider>
+      </AuthProvider>
     </Router>
   );
 }
