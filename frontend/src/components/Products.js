@@ -13,6 +13,11 @@ const Products = () => {
     const { category } = useParams(); // Get the category from the URL
     const { addToCart } = useContext(CartContext); // Access addToCart from CartContext
 
+    // State for selected filters and filter popup
+    const [selectedTags, setSelectedTags] = useState([]);
+    const [isPopupOpen, setPopupOpen] = useState(false);
+    const [expandedOption, setExpandedOption] = useState(null); // Track expanded option
+
     // Function to fetch products from the API
     const fetchProducts = async () => {
         try {
@@ -29,18 +34,19 @@ const Products = () => {
         }
     };
 
-    const filteredProducts = category
-        ? products.filter(product => 
-            product.categories.some(cat => cat.categoryURL === category))
-        : products;
+    const filteredProducts = products.filter(product => {
+        const categoryMatch = category 
+            ? product.categories.some(cat => cat.categoryURL.toLowerCase() === category.toLowerCase())
+            : true;
+
+        const tagsMatch = selectedTags.length === 0 || selectedTags.every(tag => product.filterTags.includes(tag));
+
+        return categoryMatch && tagsMatch;
+    });
 
     const categoryName = category && filteredProducts.length > 0
         ? filteredProducts[0].categories.find(cat => cat.categoryURL === category)?.name
         : 'Products';
-
-    // Filter popup functionality
-    const [isPopupOpen, setPopupOpen] = useState(false);
-    const [expandedOption, setExpandedOption] = useState(null); // Track expanded option
 
     const toggleFilterPopup = () => {
         setPopupOpen(!isPopupOpen);
@@ -51,40 +57,40 @@ const Products = () => {
         setExpandedOption(expandedOption === optionId ? null : optionId);
     };
 
+    const handleTagChange = (event) => {
+        const { value, checked } = event.target;
+        setSelectedTags(prevTags => 
+            checked ? [...prevTags, value] : prevTags.filter(tag => tag !== value)
+        );
+    };
+
+    const applyFilters = () => {
+        console.log('Selected Tags:', selectedTags);
+        // Logic to apply filters could go here if necessary
+        setPopupOpen(false); // Close the popup after applying filters
+    };
+
     // Fetch products when the component mounts
     useEffect(() => {
         fetchProducts();
     }, []);
 
     // Render loading spinner while fetching data
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
+    if (loading) return <div>Loading...</div>;
     // Render error message if something went wrong
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <div className="background">
             <a href="/" className="logo">
-                <img 
-                    src={logo} 
-                    alt="Mormor Dagny's Bageri" 
-                /> 
+                <img src={logo} alt="Mormor Dagny's Bageri" />
             </a>
 
             <div className="product-container">
                 <h1 className="title">{categoryName}</h1>
                 {/* Filter Icon and Text */}
                 <div className="filter-header">
-                    <img 
-                        className="filter" 
-                        src={filter} 
-                        alt="Filter Icon" 
-                        onClick={toggleFilterPopup} 
-                    />
+                    <img className="filter" src={filter} alt="Filter Icon" onClick={toggleFilterPopup} />
                     <span className="filter-text" onClick={toggleFilterPopup}>FILTER</span>
                 </div>
 
@@ -93,30 +99,29 @@ const Products = () => {
                     <div className="filter-popup">
                         <div className="popup-content">
                             <span className="close" onClick={toggleFilterPopup}>&times;</span>
-
                             <h3>FILTER BY</h3>
 
                             {/* Category Filters */}
                             <div className="filter-category">
                                 <h5 onClick={() => toggleOptions('category-options')}>Category</h5>
                                 <div className="filter-options" style={{ display: expandedOption === 'category-options' ? 'block' : 'none' }}>
-                                    <label><input type="checkbox" name="category" value="classic-breads" /> Classic Breads</label><br />
-                                    <label><input type="checkbox" name="category" value="grandmas-pastries" /> Grandma’s Pastries</label><br />
-                                    <label><input type="checkbox" name="category" value="homemade-cakes" /> Homemade Cakes</label><br />
-                                    <label><input type="checkbox" name="category" value="warm-drinks-coffee" /> Warm Drinks & Coffee</label><br />
-                                    <label><input type="checkbox" name="category" value="hearty-sandwiches" /> Hearty Sandwiches</label>
+                                    <label><input type="checkbox" value="classic-breads" onChange={handleTagChange} /> Classic Breads</label><br />
+                                    <label><input type="checkbox" value="grandmas-pastries" onChange={handleTagChange} /> Grandma’s Pastries</label><br />
+                                    <label><input type="checkbox" value="homemade-cakes" onChange={handleTagChange} /> Homemade Cakes</label><br />
+                                    <label><input type="checkbox" value="warm-drinks-coffee" onChange={handleTagChange} /> Warm Drinks & Coffee</label><br />
+                                    <label><input type="checkbox" value="hearty-sandwiches" onChange={handleTagChange} /> Hearty Sandwiches</label>
                                 </div>
-                            </div>          
+                            </div>
 
                             {/* Flavour Filters */}
                             <div className="filter-category">
                                 <h5 onClick={() => toggleOptions('flavour-options')}>Flavour</h5>
                                 <div className="filter-options" style={{ display: expandedOption === 'flavour-options' ? 'block' : 'none' }}>
-                                    <label><input type="checkbox" name="flavour" value="chocolate" /> Chocolate</label><br />
-                                    <label><input type="checkbox" name="flavour" value="vanilla" /> Vanilla</label><br />
-                                    <label><input type="checkbox" name="flavour" value="fruit" /> Fruit</label><br />
-                                    <label><input type="checkbox" name="flavour" value="nutty" /> Nutty</label><br />
-                                    <label><input type="checkbox" name="flavour" value="spiced" /> Spiced</label>
+                                    <label><input type="checkbox" value="chocolate" onChange={handleTagChange} /> Chocolate</label><br />
+                                    <label><input type="checkbox" value="vanilla" onChange={handleTagChange} /> Vanilla</label><br />
+                                    <label><input type="checkbox" value="fruit" onChange={handleTagChange} /> Fruit</label><br />
+                                    <label><input type="checkbox" value="nutty" onChange={handleTagChange} /> Nutty</label><br />
+                                    <label><input type="checkbox" value="spiced" onChange={handleTagChange} /> Spiced</label>
                                 </div>
                             </div>
 
@@ -124,11 +129,11 @@ const Products = () => {
                             <div className="filter-category">
                                 <h5 onClick={() => toggleOptions('dietary-options')}>Dietary Restrictions</h5>
                                 <div className="filter-options" style={{ display: expandedOption === 'dietary-options' ? 'block' : 'none' }}>
-                                    <label><input type="checkbox" name="dietary" value="gluten-free" /> Gluten-Free</label><br />
-                                    <label><input type="checkbox" name="dietary" value="vegan" /> Vegan</label><br />
-                                    <label><input type="checkbox" name="dietary" value="nut-free" /> Nut-Free</label><br />
-                                    <label><input type="checkbox" name="dietary" value="sugar-free" /> Sugar-Free</label><br />
-                                    <label><input type="checkbox" name="dietary" value="dairy-free" /> Dairy-Free</label>
+                                    <label><input type="checkbox" value="gluten-free" onChange={handleTagChange} /> Gluten-Free</label><br />
+                                    <label><input type="checkbox" value="vegan" onChange={handleTagChange} /> Vegan</label><br />
+                                    <label><input type="checkbox" value="nut-free" onChange={handleTagChange} /> Nut-Free</label><br />
+                                    <label><input type="checkbox" value="sugar-free" onChange={handleTagChange} /> Sugar-Free</label><br />
+                                    <label><input type="checkbox" value="dairy-free" onChange={handleTagChange} /> Dairy-Free</label>
                                 </div>
                             </div>
 
@@ -136,13 +141,15 @@ const Products = () => {
                             <div className="filter-category">
                                 <h5 onClick={() => toggleOptions('occasion-options')}>Occasion</h5>
                                 <div className="filter-options" style={{ display: expandedOption === 'occasion-options' ? 'block' : 'none' }}>
-                                    <label><input type="checkbox" name="occasion" value="breakfast" /> Breakfast</label><br />
-                                    <label><input type="checkbox" name="occasion" value="fika" /> Fika</label><br />
-                                    <label><input type="checkbox" name="occasion" value="birthday" /> Birthday</label><br />
-                                    <label><input type="checkbox" name="occasion" value="wedding" /> Wedding</label><br />
-                                    <label><input type="checkbox" name="occasion" value="lucia" /> Lucia</label>
+                                    <label><input type="checkbox" value="breakfast" onChange={handleTagChange} /> Breakfast</label><br />
+                                    <label><input type="checkbox" value="fika" onChange={handleTagChange} /> Fika</label><br />
+                                    <label><input type="checkbox" value="birthday" onChange={handleTagChange} /> Birthday</label><br />
+                                    <label><input type="checkbox" value="wedding" onChange={handleTagChange} /> Wedding</label><br />
+                                    <label><input type="checkbox" value="lucia" onChange={handleTagChange} /> Lucia</label>
                                 </div>
                             </div>
+
+                            <button onClick={applyFilters}>Apply Filters</button>
                         </div>
                     </div>
                 )}

@@ -1,7 +1,8 @@
 using backend.ViewModels;
 
 namespace backend.Interfaces;
+
 public interface IProductService
 {
-    Task<List<ProductViewModel>> GetProductsAsync();
+    Task<List<ProductViewModel>> GetProductsAsync(string category = null, List<string> filterTags = null);
 }

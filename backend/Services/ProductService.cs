@@ -18,11 +18,26 @@ public class ProductService : IProductService
         _imageService = imageService;
     }
 
-    public async Task<List<ProductViewModel>> GetProductsAsync()
+    public async Task<List<ProductViewModel>> GetProductsAsync(string category = null, List<string> filterTags = null)
     {
         try
         {
-            var products = await _context.Products.Include(p => p.Categories).ToListAsync();
+            // Start with all products
+            IQueryable<ProductModel> query = _context.Products.Include(p => p.Categories);
+
+            // Filter by category if provided
+            if (!string.IsNullOrEmpty(category))
+            {
+                query = query.Where(p => p.Categories.Any(c => c.CategoryURL.ToLower() == category.ToLower()));
+            }
+
+            // Filter by filterTags if provided
+            if (filterTags != null && filterTags.Count > 0)
+            {
+                query = query.Where(p => filterTags.All(tag => p.FilterTags.Contains(tag)));
+            }
+
+            var products = await query.ToListAsync();
             return products.Select(CreateProductViewModel).ToList();
         }
         catch (Exception ex)
