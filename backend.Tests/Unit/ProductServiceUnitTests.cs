@@ -6,6 +6,7 @@ using backend.Services;
 using backend.Tests.Services;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace backend.Tests.Unit
 {
@@ -52,7 +53,14 @@ namespace backend.Tests.Unit
                 Assert.Equal(product.FilterTags, result.FilterTags);
                 Assert.Equal(product.Ingredients, result.Ingredients);
                 Assert.Equal("base64String", result.Thumbnail);
-                Assert.Equal(categoryViewModels, result.Categories);
+
+                Assert.Collection(result.Categories,
+                    categoryViewModels.Select(expected => (Action<CategoryViewModel>)(actual =>
+                    {
+                        Assert.Equal(expected.Id, actual.Id);
+                        Assert.Equal(expected.Name, actual.Name);
+                        Assert.Equal(expected.CategoryURL, actual.CategoryURL);
+                    })).ToArray());
             }
         }
 
