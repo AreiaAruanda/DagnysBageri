@@ -28,18 +28,18 @@ namespace backend.Data
                     new CategoryModel { Name = "Hearty Sandwiches", Products = new List<ProductModel>(), CategoryURL = "hearty-sandwiches" }       // Homemade sandwiches with fresh bread and classic fillings
                 };
 
-            // Add categories to the context
-            context.Categories.AddRange(categories);
-            context.SaveChanges();
+                // Add categories to the context
+                context.Categories.AddRange(categories);
+                context.SaveChanges();
 
-            // Create product instances
+                // Create product instances
                 var sourdoughBread = new ProductModel
                 {
                     Name = "Sourdough Bread",
                     Description = "A loaf of freshly baked sourdough bread.",
                     Price = 4.99M,
                     Ingredients = new List<string> { "Flour", "Water", "Salt", "Yeast" },
-                    FilterTags = new List<string> { "Bread", "Sourdough", "Vegan" },
+                    FilterTags = new List<string> { "vegan", "nut-free", "breakfast", "fika", "sugar-free", "dairy-free", "vegan" },
                     Categories = new List<CategoryModel> { categories[0] },  // Classic Breads
                     ImagePath = "./Data/Images/Products/sourdough-bread.webp"
                 };
@@ -50,7 +50,7 @@ namespace backend.Data
                     Description = "A hearty loaf made with whole grains.",
                     Price = 5.49M,
                     Ingredients = new List<string> { "Whole Wheat Flour", "Water", "Yeast", "Salt" },
-                    FilterTags = new List<string> { "Bread", "Whole Grain" },
+                    FilterTags = new List<string> { "nut-free", "breakfast", "fika", "sugar-free", "dairy-free", "vegan" },
                     Categories = new List<CategoryModel> { categories[0] },  // Classic Breads
                     ImagePath = "./Data/Images/Products/farmhouse-bread.webp"
                 };
@@ -62,7 +62,7 @@ namespace backend.Data
                     Description = "A sweet roll filled with cinnamon and sugar.",
                     Price = 2.49M,
                     Ingredients = new List<string> { "Flour", "Sugar", "Cinnamon", "Butter" },
-                    FilterTags = new List<string> { "Pastry", "Cinnamon" },
+                    FilterTags = new List<string> { "spiced", "nut-free", "fika", "breakfast", "lucia" },
                     Categories = new List<CategoryModel> { categories[1] },  // Grandma’s Pastries
                     ImagePath = "./Data/Images/Products/cinnamon-bun.webp"
                 };
@@ -73,20 +73,42 @@ namespace backend.Data
                     Description = "A flaky pastry twisted with almond filling.",
                     Price = 2.99M,
                     Ingredients = new List<string> { "Flour", "Almond Paste", "Butter", "Sugar" },
-                    FilterTags = new List<string> { "Pastry", "Almond" },
+                    FilterTags = new List<string> { "nutty", "fika", "breakfast", "birthday" },
                     Categories = new List<CategoryModel> { categories[1] },  // Grandma’s Pastries
                     ImagePath = "./Data/Images/Products/almond-twist.webp"
                 };
 
                 var chocolateCroissant = new ProductModel
                 {
-                    Name = "Chocolate Croissant",
+                    Name = "chocolate Croissant",
                     Description = "A flaky croissant filled with rich chocolate.",
                     Price = 2.99M,
-                    Ingredients = new List<string> { "Flour", "Butter", "Chocolate", "Sugar", "Yeast" },
-                    FilterTags = new List<string> { "Pastry", "Chocolate", "Breakfast" },
+                    Ingredients = new List<string> { "Flour", "Butter", "chocolate", "Sugar", "Yeast" },
+                    FilterTags = new List<string> { "chocolate", "breakfast", "fika", "birthday" },
                     Categories = new List<CategoryModel> { categories[1] },  // Grandma’s Pastries
                     ImagePath = "./Data/Images/Products/chocolate-croissant.webp"
+                };
+
+                var layerCake = new ProductModel
+                {
+                    Name = "Layer Cake",
+                    Description = "A delicious multi-layered cake with cream filling.",
+                    Price = 15.99M,
+                    Ingredients = new List<string> { "Flour", "Sugar", "Butter", "Eggs", "Cream" },
+                    FilterTags = new List<string> { "birthday", "wedding" },
+                    Categories = new List<CategoryModel> { categories[2] },  // Celebration Cakes
+                    ImagePath = "./Data/Images/Products/layer-cake.webp"
+                };
+
+                var redVelvetCake = new ProductModel
+                {
+                    Name = "Red Velvet Cake",
+                    Description = "A rich red velvet cake with cream cheese frosting.",
+                    Price = 18.99M,
+                    Ingredients = new List<string> { "Flour", "Sugar", "Butter", "Eggs", "Cocoa Powder", "Cream Cheese" },
+                    FilterTags = new List<string> { "birthday", "wedding" },
+                    Categories = new List<CategoryModel> { categories[2] },  // Celebration Cakes
+                    ImagePath = "./Data/Images/Products/red-velvet-cake.webp"
                 };
 
                 var veganBrownie = new ProductModel
@@ -95,7 +117,7 @@ namespace backend.Data
                     Description = "A rich and fudgy brownie made without any animal products.",
                     Price = 3.49M,
                     Ingredients = new List<string> { "Flour", "Cocoa Powder", "Sugar", "Vegetable Oil", "Water" },
-                    FilterTags = new List<string> { "Dessert", "Vegan", "Chocolate" },
+                    FilterTags = new List<string> { "vegan", "chocolate", "nut-free", "birthday", "dairy-free" },
                     Categories = new List<CategoryModel> { categories[1] },
                     ImagePath = "./Data/Images/Products/vegan-brownie.webp"
                 };
@@ -103,36 +125,12 @@ namespace backend.Data
                 var glutenFreeMuffin = new ProductModel
                 {
                     Name = "Gluten-Free Muffin",
-                    Description = "A delicious muffin made with gluten-free ingredients.",
+                    Description = "A delicious muffin made without gluten.",
                     Price = 2.99M,
-                    Ingredients = new List<string> { "Gluten-Free Flour", "Sugar", "Eggs", "Butter", "Milk" },
-                    FilterTags = new List<string> { "Dessert", "Gluten-Free", "Muffin" },
+                    Ingredients = new List<string> { "Gluten-Free Flour", "Sugar", "Butter", "Eggs" },
+                    FilterTags = new List<string> { "gluten-free", "nut-free", "breakfast", "birthday" },
                     Categories = new List<CategoryModel> { categories[1] },
                     ImagePath = "./Data/Images/Products/gluten-free-muffin.webp"
-                };
-
-
-                // Homemade Cakes
-                var layerCake = new ProductModel
-                {
-                    Name = "Chocolate Layer Cake",
-                    Description = "Rich chocolate cake layered with chocolate frosting.",
-                    Price = 15.99M,
-                    Ingredients = new List<string> { "Flour", "Cocoa Powder", "Sugar", "Eggs", "Butter" },
-                    FilterTags = new List<string> { "Cake", "Chocolate" },
-                    Categories = new List<CategoryModel> { categories[2] },  // Homemade Cakes
-                    ImagePath = "./Data/Images/Products/chocolate-layer-cake.webp"
-                };
-
-                var redVelvetCake = new ProductModel
-                {
-                    Name = "Red Velvet Cake",
-                    Description = "A moist red velvet cake with cream cheese frosting.",
-                    Price = 18.99M,
-                    Ingredients = new List<string> { "Flour", "Sugar", "Cocoa Powder", "Eggs", "Butter", "Red Food Coloring" },
-                    FilterTags = new List<string> { "Cake", "Red Velvet" },
-                    Categories = new List<CategoryModel> { categories[2] },  // Homemade Cakes
-                    ImagePath = "./Data/Images/Products/red-velvet-cake.webp"
                 };
 
                 // Warm Drinks & Coffee
@@ -142,7 +140,7 @@ namespace backend.Data
                     Description = "Freshly brewed coffee made from high-quality beans.",
                     Price = 2.49M,
                     Ingredients = new List<string> { "Coffee Beans", "Water" },
-                    FilterTags = new List<string> { "Coffee", "Beverage" },
+                    FilterTags = new List<string> { "breakfast", "fika", "sugar-free" },
                     Categories = new List<CategoryModel> { categories[3] },  // Warm Drinks & Coffee
                     ImagePath = "./Data/Images/Products/homebrewed-coffee.webp"
                 };
@@ -153,7 +151,7 @@ namespace backend.Data
                     Description = "Rich hot chocolate made with real cocoa.",
                     Price = 2.99M,
                     Ingredients = new List<string> { "Cocoa Powder", "Sugar", "Milk", "Vanilla" },
-                    FilterTags = new List<string> { "Beverage", "Chocolate" },
+                    FilterTags = new List<string> { "chocolate", "breakfast", "fika" },
                     Categories = new List<CategoryModel> { categories[3] },  // Warm Drinks & Coffee
                     ImagePath = "./Data/Images/Products/hot-chocolate.webp"
                 };
@@ -165,7 +163,7 @@ namespace backend.Data
                     Description = "Classic ham and cheese sandwich on fresh bread.",
                     Price = 4.99M,
                     Ingredients = new List<string> { "Bread", "Ham", "Cheese", "Lettuce" },
-                    FilterTags = new List<string> { "Sandwich", "Ham" },
+                    FilterTags = new List<string> { "breakfast", "sugar-free" },
                     Categories = new List<CategoryModel> { categories[4] },  // Hearty Sandwiches
                     ImagePath = "./Data/Images/Products/ham-and-cheese-sandwich.webp"
                 };
@@ -176,7 +174,7 @@ namespace backend.Data
                     Description = "Delicious smoked salmon on artisanal bread.",
                     Price = 6.49M,
                     Ingredients = new List<string> { "Bread", "Smoked Salmon", "Cream Cheese", "Capers" },
-                    FilterTags = new List<string> { "Sandwich", "Salmon" },
+                    FilterTags = new List<string> { "breakfast", "sugar-free" },
                     Categories = new List<CategoryModel> { categories[4] },  // Hearty Sandwiches
                     ImagePath = "./Data/Images/Products/smoked-salmon-sandwich.webp"
                 };
@@ -195,7 +193,7 @@ namespace backend.Data
                 // Update categories with products
                 categories[0].Products.AddRange(new[] { sourdoughBread, farmhouseBread });  // Classic Breads
                 categories[1].Products.AddRange(new[] { cinnamonBun, almondTwist, veganBrownie, chocolateCroissant, glutenFreeMuffin }); // Grandma’s Pastries
-                categories[2].Products.AddRange(new[] { layerCake, redVelvetCake});  // Homemade Cakes
+                categories[2].Products.AddRange(new[] { layerCake, redVelvetCake });  // Homemade Cakes
                 categories[3].Products.AddRange(new[] { homebrewedCoffee, hotChocolate });  // Warm Drinks & Coffee
                 categories[4].Products.AddRange(new[] { hamAndCheeseSandwich, smokedSalmonSandwich });  // Hearty Sandwiches
 
@@ -207,7 +205,7 @@ namespace backend.Data
         }
 
 
-                // Method to seed initial orders into the database
+        // Method to seed initial orders into the database
         public static async Task SeedOrders(IServiceProvider serviceProvider)
         {
             using (var context = new WebshopDbContext(

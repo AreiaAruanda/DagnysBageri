@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import './Products.css';
 import { CartContext } from '../contexts/CartContext'; // Import the Cart Context
 import logo from '../assets/logo_circle.png';
@@ -10,8 +10,15 @@ const Products = () => {
     const [products, setProducts] = useState([]); // State to store the products
     const [loading, setLoading] = useState(true); // State to show loading spinner
     const [error, setError] = useState(null); // State to handle errors
+    const location = useLocation(); // Get the current location
     const { category } = useParams(); // Get the category from the URL
     const { addToCart } = useContext(CartContext); // Access addToCart from CartContext
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [expandedOption, setExpandedOption] = useState(null);
+    const [checkedFilters, setCheckedFilters] = useState({
+        category: category ? [category] : [],
+        tags: [] // Combined variable for flavour, dietary, and occasion
+    });
 
     // Function to fetch products from the API
     const fetchProducts = async () => {
@@ -29,32 +36,59 @@ const Products = () => {
         }
     };
 
-    const filteredProducts = category
-        ? products.filter(product => 
-            product.categories.some(cat => cat.categoryURL === category))
-        : products;
+    useEffect(() => {
+        fetchProducts();
+    }, []);
+
+        // Reset filters when the URL changes
+    useEffect(() => {
+        if (!category) {
+            setCheckedFilters({
+                category: [],
+                tags: []
+            });
+        }
+    }, [location, category]);
+
+    const toggleFilterPopup = () => {
+        setIsPopupOpen(!isPopupOpen);
+    };
+
+    const toggleOptions = (option) => {
+        setExpandedOption(expandedOption === option ? null : option);
+    };
+
+    const handleCheckboxChange = (e) => {
+        const { name, value, checked } = e.target;
+        setCheckedFilters(prevState => {
+            const newFilters = { ...prevState };
+            if (checked) {
+                newFilters[name].push(value);
+            } else {
+                newFilters[name] = newFilters[name].filter(item => item !== value);
+            }
+            return newFilters;
+        });
+    };
+
+    const getFilteredProducts = () => {
+        const filteredSet = new Set();
+        products.forEach(product => {
+            const categoryMatch = checkedFilters.category.length === 0 || product.categories.some(cat => checkedFilters.category.includes(cat.categoryURL));
+            const tagsMatch = checkedFilters.tags.length === 0 || checkedFilters.tags.every(tag => product.filterTags.includes(tag));
+
+            if (categoryMatch && tagsMatch) {
+                filteredSet.add(product);
+            }
+        });
+        return Array.from(filteredSet);
+    };
+
+    const filteredProducts = getFilteredProducts();
 
     const categoryName = category && filteredProducts.length > 0
         ? filteredProducts[0].categories.find(cat => cat.categoryURL === category)?.name
         : 'Products';
-
-    // Filter popup functionality
-    const [isPopupOpen, setPopupOpen] = useState(false);
-    const [expandedOption, setExpandedOption] = useState(null); // Track expanded option
-
-    const toggleFilterPopup = () => {
-        setPopupOpen(!isPopupOpen);
-    };
-
-    const toggleOptions = (optionId) => {
-        // Expand one category at a time
-        setExpandedOption(expandedOption === optionId ? null : optionId);
-    };
-
-    // Fetch products when the component mounts
-    useEffect(() => {
-        fetchProducts();
-    }, []);
 
     // Render loading spinner while fetching data
     if (loading) {
@@ -100,23 +134,23 @@ const Products = () => {
                             <div className="filter-category">
                                 <div className="filter-name" onClick={() => toggleOptions('category-options')}>Category</div>
                                 <div className="filter-options" style={{ display: expandedOption === 'category-options' ? 'block' : 'none' }}>
-                                    <label><input type="checkbox" name="category" value="classic-breads" /> Classic Breads</label><br />
-                                    <label><input type="checkbox" name="category" value="grandmas-pastries" /> Grandma’s Pastries</label><br />
-                                    <label><input type="checkbox" name="category" value="homemade-cakes" /> Homemade Cakes</label><br />
-                                    <label><input type="checkbox" name="category" value="warm-drinks-coffee" /> Warm Drinks & Coffee</label><br />
-                                    <label><input type="checkbox" name="category" value="hearty-sandwiches" /> Hearty Sandwiches</label>
+                                    <label><input type="checkbox" name="category" value="classic-breads" onChange={handleCheckboxChange} checked={checkedFilters.category.includes('classic-breads')} /> Classic Breads</label><br />
+                                    <label><input type="checkbox" name="category" value="grandmas-pastries" onChange={handleCheckboxChange} checked={checkedFilters.category.includes('grandmas-pastries')} /> Grandma’s Pastries</label><br />
+                                    <label><input type="checkbox" name="category" value="homemade-cakes" onChange={handleCheckboxChange} checked={checkedFilters.category.includes('homemade-cakes')} /> Homemade Cakes</label><br />
+                                    <label><input type="checkbox" name="category" value="warm-drinks-coffee" onChange={handleCheckboxChange} checked={checkedFilters.category.includes('warm-drinks-coffee')} /> Warm Drinks & Coffee</label><br />
+                                    <label><input type="checkbox" name="category" value="hearty-sandwiches" onChange={handleCheckboxChange} checked={checkedFilters.category.includes('hearty-sandwiches')} /> Hearty Sandwiches</label>
                                 </div>
-                            </div>          
+                            </div>
 
                             {/* Flavour Filters */}
                             <div className="filter-category">
                                 <div className="filter-name" onClick={() => toggleOptions('flavour-options')}>Flavour</div>
                                 <div className="filter-options" style={{ display: expandedOption === 'flavour-options' ? 'block' : 'none' }}>
-                                    <label><input type="checkbox" name="flavour" value="chocolate" /> Chocolate</label><br />
-                                    <label><input type="checkbox" name="flavour" value="vanilla" /> Vanilla</label><br />
-                                    <label><input type="checkbox" name="flavour" value="fruit" /> Fruit</label><br />
-                                    <label><input type="checkbox" name="flavour" value="nutty" /> Nutty</label><br />
-                                    <label><input type="checkbox" name="flavour" value="spiced" /> Spiced</label>
+                                    <label><input type="checkbox" name="tags" value="chocolate" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('chocolate')} /> Chocolate</label><br />
+                                    <label><input type="checkbox" name="tags" value="vanilla" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('vanilla')} /> Vanilla</label><br />
+                                    <label><input type="checkbox" name="tags" value="fruit" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('fruit')} /> Fruit</label><br />
+                                    <label><input type="checkbox" name="tags" value="nutty" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('nutty')} /> Nutty</label><br />
+                                    <label><input type="checkbox" name="tags" value="spiced" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('spiced')} /> Spiced</label>
                                 </div>
                             </div>
 
@@ -124,11 +158,11 @@ const Products = () => {
                             <div className="filter-category">
                                  <div className="filter-name" onClick={() => toggleOptions('dietary-options')}>Dietary Restrictions</div>
                                 <div className="filter-options" style={{ display: expandedOption === 'dietary-options' ? 'block' : 'none' }}>
-                                    <label><input type="checkbox" name="dietary" value="gluten-free" /> Gluten-Free</label><br />
-                                    <label><input type="checkbox" name="dietary" value="vegan" /> Vegan</label><br />
-                                    <label><input type="checkbox" name="dietary" value="nut-free" /> Nut-Free</label><br />
-                                    <label><input type="checkbox" name="dietary" value="sugar-free" /> Sugar-Free</label><br />
-                                    <label><input type="checkbox" name="dietary" value="dairy-free" /> Dairy-Free</label>
+                                    <label><input type="checkbox" name="tags" value="gluten-free" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('gluten-free')} /> Gluten-Free</label><br />
+                                    <label><input type="checkbox" name="tags" value="vegan" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('vegan')} /> Vegan</label><br />
+                                    <label><input type="checkbox" name="tags" value="nut-free" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('nut-free')} /> Nut-Free</label><br />
+                                    <label><input type="checkbox" name="tags" value="sugar-free" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('sugar-free')} /> Sugar-Free</label><br />
+                                    <label><input type="checkbox" name="tags" value="dairy-free" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('dairy-free')} /> Dairy-Free</label>
                                 </div>
                             </div>
 
@@ -136,11 +170,11 @@ const Products = () => {
                             <div className="filter-category">
                                 <div className="filter-name" onClick={() => toggleOptions('occasion-options')}>Occasion</div>
                                 <div className="filter-options" style={{ display: expandedOption === 'occasion-options' ? 'block' : 'none' }}>
-                                    <label><input type="checkbox" name="occasion" value="breakfast" /> Breakfast</label><br />
-                                    <label><input type="checkbox" name="occasion" value="fika" /> Fika</label><br />
-                                    <label><input type="checkbox" name="occasion" value="birthday" /> Birthday</label><br />
-                                    <label><input type="checkbox" name="occasion" value="wedding" /> Wedding</label>
-                                    <label><input type="checkbox" name="occasion" value="lucia" /> Lucia</label>
+                                    <label><input type="checkbox" name="tags" value="breakfast" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('breakfast')} /> Breakfast</label><br />
+                                    <label><input type="checkbox" name="tags" value="fika" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('fika')} /> Fika</label><br />
+                                    <label><input type="checkbox" name="tags" value="birthday" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('birthday')} /> Birthday</label><br />
+                                    <label><input type="checkbox" name="tags" value="wedding" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('wedding')} /> Wedding</label><br />
+                                    <label><input type="checkbox" name="tags" value="lucia" onChange={handleCheckboxChange} checked={checkedFilters.tags.includes('lucia')} /> Lucia</label>
                                 </div>
                             </div>
                         </div>
@@ -179,5 +213,4 @@ const Products = () => {
     );
 };
 
-// Export the Products component
 export default Products;
