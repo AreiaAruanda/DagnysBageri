@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom'; // Import Link for navigation
 import './Products.css';
-import { CartContext} from '../contexts/CartContext'; // Import the Cart Context after Merging with makeCart branch
+import { CartContext } from '../contexts/CartContext'; // Import the Cart Context after Merging with makeCart branch
 
-// Functional component for the Products page
 const Products = () => {
     const [products, setProducts] = useState([]);  // State to store the products
     const [loading, setLoading] = useState(true);  // State to show loading spinner
@@ -62,14 +61,18 @@ const Products = () => {
                                 <div className="d-flex justify-content-center align-items-stretch h-100">
                                     <div className="card mb-4 d-flex flex-column">
                                         <div className="card-img-wrapper">
-                                            <img
-                                                src={product.thumbnail}
-                                                className="card-img-top"
-                                                alt={product.name}
-                                            />
+                                            <Link to={`/product/${product.id}`}>
+                                                <img
+                                                    src={product.thumbnail}
+                                                    className="card-img-top"
+                                                    alt={product.name}
+                                                />
+                                            </Link>
                                         </div>
                                         <div className="card-body d-flex flex-column">
-                                            <h5 className="card-title">{product.name}</h5>
+                                            <Link to={`/product/${product.id}`}>
+                                                <h5 className="card-title">{product.name}</h5>
+                                            </Link>
                                             <p className="card-text">{product.description}</p>
                                             <p id="price" className="card-text">Price: ${product.price}</p>
                                             <button className="button" onClick={() => addToCart(product)}>Add to Cart</button>
@@ -87,5 +90,4 @@ const Products = () => {
     );
 };
 
-// Export the Products component
 export default Products;

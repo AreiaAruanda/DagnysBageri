@@ -1,4 +1,3 @@
-// src/App.js
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import necessary components from react-router-dom
 import Home from './components/Home'; // Import the Home component
 import './App.css'; // Import the CSS file for styling
@@ -8,6 +7,7 @@ import Navbar from './components/Navbar'; // Import the Navbar component
 import Contact from './components/Contact'; // Import the Contact component
 import Checkout from './components/Checkout';
 import Products from './components/Products'; // Import the Products component
+import ProductDetails from './components/ProductDetails'; // Import the ProductDetail component
 
 // Main App component
 function App() {
@@ -23,7 +23,8 @@ function App() {
           <Route path="/products/:category?" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Checkout/>} />
-        </Routes>
+          <Route path="/product/:id" element={<ProductDetails />} />
+          </Routes>
       </div>
     </CartProvider>
     </Router>
