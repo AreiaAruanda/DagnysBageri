@@ -33,9 +33,6 @@ const Checkout = () => {
     orderItems: formattedOrderItems, // Replace cart with formatted order items
   };
 
-  console.log('Customer Info:', orderData);
-
-
   // Example: Use fetch or axios to send the data to the backend
   fetch('http://localhost:5032/api/v1/orders', {
     method: 'POST',
@@ -52,7 +49,6 @@ const Checkout = () => {
       }
     })
     .then(data => {
-      console.log('Checkout Successful:', data);
       clearCart(); // Clear the cart after successful checkout
     })
     .catch(error => {
@@ -60,7 +56,6 @@ const Checkout = () => {
     });
   alert('Your order has been processed!');
 };
-
 
   return (
 

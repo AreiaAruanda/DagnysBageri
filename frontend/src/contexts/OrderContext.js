@@ -10,7 +10,6 @@ export const OrderProvider = ({ children }) => {
     const fetchOrders = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
-            console.log('Retrieved token for fetching orders:', token);
             if (!token) {
                 throw new Error('No token found');
             }

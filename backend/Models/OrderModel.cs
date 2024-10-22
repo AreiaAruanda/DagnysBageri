@@ -43,6 +43,6 @@ namespace backend.Models
 
         // Status of the order, with a default value of "Pending"
         [DefaultValue("Pending")]
-        public string? Status { get; set; }
+        public string? Status { get; set; } = "Pending";
     }
 }

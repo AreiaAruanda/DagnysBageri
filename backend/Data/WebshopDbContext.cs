@@ -36,6 +36,13 @@ namespace backend.Data
                     .WithMany()
                     .HasForeignKey(oi => oi.ProductId); // Foreign key in OrderItemModel referencing ProductModel
             });
+
+            // Set up default value for OrderModel.Status
+            builder.Entity<OrderModel>(entity =>
+            {
+                entity.Property(o => o.Status)
+                .HasDefaultValue("Pending");
+            });
         }
     }
 }
